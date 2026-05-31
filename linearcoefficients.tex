@@ -1,0 +1,151 @@
+\documentclass[12pt,a4paper]{article}
+%\usepackage[skip]{parskip}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage[ieee]{linearcoefficients}
+
+\begin{document}
+\title{linearcoefficients -- version 1.0.0}
+\author{Einar Halvorsen}
+\date{May 25, 2026}
+\maketitle
+
+\abstract{
+This package helps dealing with the notation for linear elastic/piezoelectric materials by defining commands for fields and coefficients as well as support for easy switching between different notations. There is also support for handling the superscripts denoting the condtions for the coeffients. 
+}
+
+\section{Notation}
+This package provides commands for the symbols of the physical quantities of a piezoelectric as well as for the linear coefficients relating them. The actual symbols are defined according to specified a notation. The primary objective of this functionality is to add a layer of abstraction that make reuse of \LaTeX{} code in a context that requires different notation.
+
+Two notations are predefined: One mostly congruent with the definitions in the IEEE standard on piezoelectricity \cite{IEEEstd}. It is set with the command \verb|\IEEENotation| or by passing the option \verb|ieee| to the package. The other notation mostly follows Nye \cite{Nye}. Its command is \verb|\NyeNotation| and its option is \verb|nye|.
+
+Any number of notational options can be given to the package. The last one in the options list is the one chosen. If none is given, the package defaults to the IEEE-like notation. This defines the notation globally in the document.
+The predefined notations are given in table \ref{tab:notations} which shows the physical quantity, its corresponding symbol in each predefined notation and the command to generate it.
+
+The definitons can be changed within the local scope (group). For example, in a document where the globally defined notation is the IEEE-like notation, the code
+\begin{verbatim}
+\[
+  {\NyeNotation\stress_{ik} = \stiffness_{ijkl}\strain_{kl}}
+  \qquad\mbox{vs.}\qquad
+  {\noelectrical \stress_{ik} = \stiffness_{ijkl}\strain_{kl}}.
+\]
+\end{verbatim}
+produces
+\[
+  {\NyeNotation\stress_{ik} = \stiffness_{ijkl}\strain_{kl}}
+  \qquad\mbox{vs.}\qquad
+  {\noelectrical \stress_{ik} = \stiffness_{ijkl}\strain_{kl}}.
+\]
+\begin{table}
+  \centering
+  \caption{Symbols for  the predefined notations (sans indices). \label{tab:notations}}
+  \begin{tabular}{llcc}
+    \hline\hline
+    Quantity &  Command & IEEE & Nye \\
+    \hline 
+    electric field & \verb|\efield|
+                        & $\IEEENotation\efield$
+                               & $\NyeNotation\efield$\\
+    electric flux density & \verb|\dfield|
+                        & $\IEEENotation\dfield$
+                               & $\NyeNotation\dfield$\\
+    stress & \verb|\stress|
+                        & $\IEEENotation\stress$
+                               & $\NyeNotation\stress$\\
+    strain & \verb|\strain|
+                        & $\IEEENotation\strain$
+                               & $\NyeNotation\strain$\\
+    temperature & \verb|\temperature|
+                        & $\IEEENotation\temperature$
+                               & $\NyeNotation\temperature$\\
+    entropy density & \verb|\entropydensity|
+                        & $\IEEENotation\entropydensity$
+                               & $\NyeNotation\entropydensity$\\
+    \hline
+    stiffness coefficient & \verb|\stiffness|
+                        & $\IEEENotation\stiffness$
+                               & $\NyeNotation\stiffness$\\
+    compliance coefficient & \verb|\compliance|
+                        & $\IEEENotation\compliance$
+                               & $\NyeNotation\compliance$\\
+    permittivity & \verb|\permittivity|
+                        & $\IEEENotation\permittivity$
+                               & $\NyeNotation\permittivity$\\
+    impermittivity & \verb|\impermittivity|
+                        & $\IEEENotation\impermittivity$
+                               & $\NyeNotation\impermittivity$\\
+    piezoelecric cofefficient &\verb|\piezoh|
+                        & $\IEEENotation\piezoh$
+                               & $\NyeNotation\piezoh$\\
+    piezoelecric cofefficient & \verb|\piezog|
+                        & $\IEEENotation\piezog$
+                               & $\NyeNotation\piezog$\\
+    piezoelecric cofefficient & \verb|\piezoe|
+                        & $\IEEENotation\piezoe$
+                               & $\NyeNotation\piezoe$\\
+    piezoelecric cofefficient& \verb|\piezod|
+                        & $\IEEENotation\piezod$
+                               & $\NyeNotation\piezod$\\
+    \hline
+  \end{tabular}
+\end{table}
+
+
+\section{Free  variables}
+It is customary to denote the conditions under which a linear coefficient is measured by superscripts. For example, a stiffness constant measured at constant electric field and temperature is written ${\freeefield\freetemperature\stiffness_{ij}}$ in the IEEE-like notation. It is possible to accomplish this by writing \verb|c^{\efield,\temperature}_{ij}|, but the package provides notation to automate the inclusion of such superscripts. 
+
+The automated notation hinges on declaration of at most one field variable from
+each of the domains mechanical, electrical and thermal as free variables.
+The package then includes the relevant variables among those that are declared as independent in the supercscripts.
+
+The command  \verb|\freestress| declares stress as a free variable in
+the mechanical domain. Since the conjugate variable strain then must be dependent,
+any prior declaration of it as free is nulled by the command.
+Likewise \verb|\freestrain| declares strain as the free variable in the
+mechanical domain. In the electrical domain the similar commands are 
+\verb|\freeefield| and  \verb|\freedfield| for respectively the electrical field and the electric flux density. In the thermal domain the commands are
+\verb|\freetemperature| and \verb|\freeentropydensity| for respectively temperature and entropy density.
+
+The commands \verb|\nomechanical|, \verb|\noelectrical| and \verb|\nothermal| clear all declarations of free variables in the domain indicated by the name of the command. The command \verb|\nofree| clears all declarations of
+free variables.
+
+\begin{table}
+  \caption{Examples of IEEE-like notation for coefficients depending on which fields are declared free.}
+  \label{tab:coefficicents}
+  \newcommand{\coefficientlist}{$\stiffness_{ijkl}$, $\compliance_{ijkl}$,
+         $\permittivity_{ij}$, $\impermittivity_{ij}$,
+         $\piezoh_{ikl}$,  $\piezog_{ikl}$, $\piezoe_{ikl}$, $\piezod_{ikl}$}
+  \centering
+  \begin{tabular}{lc}
+    \hline\hline
+    Free & Coefficients\\
+    \hline
+    \rule{0pt}{2.5ex} -- & \coefficientlist\\
+    \rule{0pt}{2.5ex} $\efield$ & \freeefield\coefficientlist\\
+    \rule{0pt}{2.5ex} $\dfield$ & \freedfield\coefficientlist\\
+    \rule{0pt}{2.5ex} $\efield$, $\stress$
+         & \freeefield\freestress\coefficientlist\\
+    \rule{0pt}{2.5ex} $\efield$, $\strain$
+         & \freeefield\freestrain\coefficientlist\\
+    \rule{0pt}{2.5ex} $\efield$, $\strain$, $\temperature$
+         & \freeefield\freestrain\freetemperature\coefficientlist\\
+    \rule{0pt}{2.5ex} $\efield$, $\strain$, $\entropydensity$
+         & \freeefield\freestrain\freeentropydensity\coefficientlist\\
+    \hline
+  \end{tabular}
+\end{table}
+
+As an example usage, consider the code
+\begin{verbatim}
+TBD
+\end{verbatim}
+for a set of linear constitutive equations which renders as
+\freestress\freeefield\freetemperature
+\begin{align*}
+  \strain_{ij} & = \compliance_{ijkl}\stress_{kl} + \piezod_{kij}\efield_k + (???)_{ij}\temperature \\
+  \dfield_i & = \piezod_{ikl}\stress_{kl} + \permittivity_{ik}\efield_k + (???)_i\temperature \\
+  \entropydensity & = (???)_{kl}\stress_{kl} + (???)_k\efield_k + (???)\temperature
+\end{align*}
+
+
+\end{document}

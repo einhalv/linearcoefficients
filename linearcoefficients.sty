@@ -1,0 +1,159 @@
+% Copyright (C) 2026 Einar Halvorsen
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{linearcoefficients}[2026/05/24 v1.0.0 Package for controlling notation of linear ceofficients]
+
+\newif\if@ieee
+\newif\if@nye
+
+\DeclareOption{ieee}{\@ieeetrue\@nyefalse}
+\DeclareOption{nye}{\@ieeefalse\@nyetrue}
+\DeclareOption*{\PackageWarning{linearcoefficients}{Unknown ‘\CurrentOption’}}
+\ExecuteOptions{ieee}
+\ProcessOptions*\relax
+
+% utilities
+\def\@ifempty#1{\edef\temp{#1}\ifx\temp\empty}
+
+% symbols 
+\newcommand{\efieldsymbol}{}
+\newcommand{\dfieldsymbol}{}
+\newcommand{\stresssymbol}{}
+\newcommand{\strainsymbol}{}
+\newcommand{\temperaturesymbol}{}
+\newcommand{\entropydensitysymbol}{}
+\newcommand{\stiffnesssymbol}{}
+\newcommand{\compliancesymbol}{}
+\newcommand{\permittivitysymbol}{}
+\newcommand{\impermittivitysymbol}{}
+\newcommand{\piezohsymbol}{}
+\newcommand{\piezogsymbol}{}
+\newcommand{\piezoesymbol}{}
+\newcommand{\piezodsymbol}{}
+
+\newcommand{\IEEENotation}{% (~ IEEE std on piezoelectricity)
+\renewcommand{\efieldsymbol}{E}%
+\renewcommand{\dfieldsymbol}{D}%
+\renewcommand{\stresssymbol}{T}%
+\renewcommand{\strainsymbol}{S}%
+\renewcommand{\temperaturesymbol}{\theta}%
+\renewcommand{\entropydensitysymbol}{\sigma}%
+\renewcommand{\stiffnesssymbol}{c}%
+\renewcommand{\compliancesymbol}{s}%
+\renewcommand{\permittivitysymbol}{\epsilon}%
+\renewcommand{\impermittivitysymbol}{\beta}%
+\renewcommand{\piezohsymbol}{h}%
+\renewcommand{\piezogsymbol}{g}%
+\renewcommand{\piezoesymbol}{e}%
+\renewcommand{\piezodsymbol}{d}%
+}
+
+\newcommand{\NyeNotation}{% (~ Nye's notation)
+\renewcommand{\efieldsymbol}{E}%
+\renewcommand{\dfieldsymbol}{D}%
+\renewcommand{\stresssymbol}{\sigma}%
+\renewcommand{\strainsymbol}{\epsilon}%
+\renewcommand{\temperaturesymbol}{T}%
+\renewcommand{\entropydensitysymbol}{s}%?
+\renewcommand{\stiffnesssymbol}{c}%
+\renewcommand{\compliancesymbol}{s}%
+\renewcommand{\permittivitysymbol}{\kappa}%
+\renewcommand{\impermittivitysymbol}{\beta}%
+\renewcommand{\piezohsymbol}{h}%
+\renewcommand{\piezogsymbol}{g}%
+\renewcommand{\piezoesymbol}{e}%
+\renewcommand{\piezodsymbol}{d}%
+}
+
+\if@ieee\IEEENotation\fi
+\if@nye\NyeNotation\fi
+
+% free variables
+\newif\if@efieldfree
+\newif\if@dfieldfree
+\newif\if@stressfree
+\newif\if@strainfree
+\newif\if@temperaturefree
+\newif\if@entropydensityfree
+\newcommand{\freestress}{%
+  \@stressfreetrue
+  \@strainfreefalse  
+}
+\newcommand{\freestrain}{%
+  \@stressfreefalse
+  \@strainfreetrue  
+}
+\newcommand{\freeefield}{%
+  \@efieldfreetrue
+  \@dfieldfreefalse
+}
+\newcommand{\freedfield}{%
+  \@efieldfreefalse
+  \@dfieldfreetrue
+}
+\newcommand{\freetemperature}{%
+  \@temperaturefreetrue
+  \@entropydensityfreefalse
+}
+\newcommand{\freeentropydensity}{%
+  \@entropydensityfreetrue
+  \@temperaturefreefalse
+}
+
+\newcommand{\nomechanical}{%
+  \@stressfreefalse
+  \@strainfreefalse  
+}
+\newcommand{\noelectrical}{%
+  \@efieldfreefalse
+  \@dfieldfreefalse
+}
+\newcommand{\nothermal}{%
+  \@temperaturefreefalse
+  \@entropydensityfreefalse
+}
+\newcommand{\nofree}{\nomechanical\noelectrical\nothermal}
+
+% full commands
+\def\@mechvar{\if@stressfree\stress\fi\if@strainfree\strain\fi}
+\def\@elvar{\if@efieldfree\efield\fi\if@dfieldfree\dfield\fi}
+\def\@thermvar{\if@temperaturefree\temperature\fi\if@entropydensityfree\entropydensity\fi}
+\newcommand{\efield}{\efieldsymbol}
+\newcommand{\dfield}{\dfieldsymbol}
+\newcommand{\stress}{\stresssymbol}
+\newcommand{\strain}{\strainsymbol}
+\newcommand{\temperature}{\temperaturesymbol}
+\newcommand{\entropydensity}{\entropydensitysymbol}
+\newcommand{\stiffness}{%
+  \def\first{\@elvar}%
+  \def\second{\@thermvar}%
+  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
+\stiffnesssymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+\newcommand{\compliance}{%
+  \def\first{\@elvar}%
+  \def\second{\@thermvar}%
+  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
+\compliancesymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+\newcommand{\permittivity}{%
+  \def\first{\@mechvar}%
+  \def\second{\@thermvar}%
+  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
+\permittivitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+\newcommand{\impermittivity}{%
+  \def\first{\@mechvar}%
+  \def\second{\@thermvar}%
+  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
+\impermittivitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+\newcommand{\piezoh}{%
+    \def\first{\@thermvar}%
+\piezohsymbol^{\first}}
+\newcommand{\piezog}{%
+    \def\first{\@thermvar}%
+\piezogsymbol^{\first}}
+\newcommand{\piezoe}{%
+    \def\first{\@thermvar}%
+\piezoesymbol^{\first}}
+\newcommand{\piezod}{%
+    \def\first{\@thermvar}%
+\piezodsymbol^{\first}}
+
+\endinput
