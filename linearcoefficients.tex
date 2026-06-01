@@ -17,7 +17,7 @@ This package helps dealing with the notation for linear elastic/piezoelectric ma
 \section{Notation}
 This package provides commands for the symbols of the physical quantities of a piezoelectric as well as for the linear coefficients relating them. The actual symbols are defined according to specified a notation. The primary objective of this functionality is to add a layer of abstraction that make reuse of \LaTeX{} code in a context that requires different notation.
 
-Two notations are predefined: One mostly congruent with the definitions in the IEEE standard on piezoelectricity \cite{IEEEstd}. It is set with the command \verb|\IEEENotation| or by passing the option \verb|ieee| to the package. The other notation mostly follows Nye \cite{Nye}. Its command is \verb|\NyeNotation| and its option is \verb|nye|.
+Two notations are predefined: One mostly congruent with the definitions in the IEEE standard on piezoelectricity \cite{IEEEpiezostd1996}. It is set with the command \verb|\IEEENotation| or by passing the option \verb|ieee| to the package. The other notation mostly follows Nye \cite{Nye1985}. Its command is \verb|\NyeNotation| and its option is \verb|nye|.
 
 Any number of notational options can be given to the package. The last one in the options list is the one chosen. If none is given, the package defaults to the IEEE-like notation. This defines the notation globally in the document.
 The predefined notations are given in table \ref{tab:notations} which shows the physical quantity, its corresponding symbol in each predefined notation and the command to generate it.
@@ -147,5 +147,7 @@ for a set of linear constitutive equations which renders as
   \entropydensity & = (???)_{kl}\stress_{kl} + (???)_k\efield_k + (???)\temperature
 \end{align*}
 
+\bibliographystyle{plain}
+\bibliography{piezo, books}
 
 \end{document}
