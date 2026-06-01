@@ -86,6 +86,21 @@ produces
     piezoelectric cofefficient& \verb|\piezod|
                         & $\IEEENotation\piezod$
                                & $\NyeNotation\piezod$\\
+    heat capacity & \verb|\heatcapacity|
+                        & $\IEEENotation\heatcapacity$
+                               &  $\NyeNotation\heatcapacity$\\
+    pyroelectric coefficient & \verb|\pyroelec|
+                        & $\IEEENotation\pyroelec$
+                               &  $\NyeNotation\pyroelec$\\
+    heat of polarization & \verb|\heatofpolarization|
+                        & $\IEEENotation\heatofpolarization$
+                               &  $\NyeNotation\heatofpolarization$\\
+    coefficient of thermal expansion  & \verb|\thermalexpansion|
+                        & $\IEEENotation\thermalexpansion$
+                               &  $\NyeNotation\thermalexpansion$\\
+    heat of deformation  & \verb|\heatofdeformation|
+                        & $\IEEENotation\heatofdeformation$
+                               &  $\NyeNotation\heatofdeformation$\\
     \hline
   \end{tabular}
 \end{table}
@@ -137,15 +152,30 @@ free variables.
 
 As an example usage, consider the code
 \begin{verbatim}
-TBD
-\end{verbatim}
-for a set of linear constitutive equations which renders as
-\freestress\freeefield\freetemperature
+{\NyeNotation
 \begin{align*}
-  \strain_{ij} & = \compliance_{ijkl}\stress_{kl} + \piezod_{kij}\efield_k + (???)_{ij}\temperature \\
-  \dfield_i & = \piezod_{ikl}\stress_{kl} + \permittivity_{ik}\efield_k + (???)_i\temperature \\
-  \entropydensity & = (???)_{kl}\stress_{kl} + (???)_k\efield_k + (???)\temperature
+  \strain_{ij} & = \compliance_{ijkl}\stress_{kl} +
+                 \piezod_{kij}\efield_k
+                 + \thermalexpansion_{ij}\temperature \\
+  \dfield_i & = \piezod_{ikl}\stress_{kl}
+              + \permittivity_{ik}\efield_k
+              + \pyroelec_i\temperature \\
+  \Delta\entropydensity & = \thermalexpansion_{kl}\stress_{kl}
+                          + \pyroelec_k\efield_k
+                          + (\heatcapacity/\temperature)
+                          \Delta\temperature.
 \end{align*}
+}
+\end{verbatim}
+for a set of linear constitutive equations. It renders as
+\freestress\freeefield\freetemperature
+{\NyeNotation
+\begin{align*}
+  \strain_{ij} & = \compliance_{ijkl}\stress_{kl} + \piezod_{kij}\efield_k + \thermalexpansion_{ij}\temperature \\
+  \dfield_i & = \piezod_{ikl}\stress_{kl} + \permittivity_{ik}\efield_k + \pyroelec_i\temperature \\
+  \Delta\entropydensity & = \thermalexpansion_{kl}\stress_{kl} + \pyroelec_k\efield_k + (\heatcapacity/\temperature)\Delta\temperature.
+\end{align*}
+}
 
 \bibliographystyle{plain}
 \bibliography{piezo, books}

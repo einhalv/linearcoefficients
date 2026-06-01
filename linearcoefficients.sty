@@ -29,8 +29,13 @@
 \newcommand{\piezogsymbol}{}
 \newcommand{\piezoesymbol}{}
 \newcommand{\piezodsymbol}{}
+\newcommand{\heatcapacitysymbol}{}
+\newcommand{\pyroelecsymbol}{}
+\newcommand{\heatofpolarizationsymbol}{}
+\newcommand{\thermalexpansionsymbol}{}
+\newcommand{\heatofdeformationsymbol}{}
 
-\newcommand{\IEEENotation}{% (~ IEEE std on piezoelectricity)
+\newcommand{\IEEENotation}{% (IEEE std on piezoelectricity)
 \renewcommand{\efieldsymbol}{E}%
 \renewcommand{\dfieldsymbol}{D}%
 \renewcommand{\stresssymbol}{T}%
@@ -45,9 +50,14 @@
 \renewcommand{\piezogsymbol}{g}%
 \renewcommand{\piezoesymbol}{e}%
 \renewcommand{\piezodsymbol}{d}%
+\renewcommand{\heatcapacitysymbol}{?}%
+\renewcommand{\pyroelecsymbol}{?}
+\renewcommand{\heatofpolarizationsymbol}{?}
+\renewcommand{\thermalexpansionsymbol}{?}
+\renewcommand{\heatofdeformationsymbol}{?}
 }
 
-\newcommand{\NyeNotation}{% (~ Nye's notation)
+\newcommand{\NyeNotation}{% (Nye's notation)
 \renewcommand{\efieldsymbol}{E}%
 \renewcommand{\dfieldsymbol}{D}%
 \renewcommand{\stresssymbol}{\sigma}%
@@ -62,7 +72,35 @@
 \renewcommand{\piezogsymbol}{g}%
 \renewcommand{\piezoesymbol}{e}%
 \renewcommand{\piezodsymbol}{d}%
+\renewcommand{\heatcapacitysymbol}{C}
+\renewcommand{\pyroelecsymbol}{p}
+\renewcommand{\heatofpolarizationsymbol}{t}
+\renewcommand{\thermalexpansionsymbol}{\alpha}
+\renewcommand{\heatofdeformationsymbol}{f}
 }
+
+\newcommand{\IkedaNotation}{% (Ikeda's notation)
+\renewcommand{\efieldsymbol}{E}%
+\renewcommand{\dfieldsymbol}{D}%
+\renewcommand{\stresssymbol}{\sigma}%
+\renewcommand{\strainsymbol}{\epsilon}%
+\renewcommand{\temperaturesymbol}{T}%
+\renewcommand{\entropydensitysymbol}{s}%?
+\renewcommand{\stiffnesssymbol}{c}%
+\renewcommand{\compliancesymbol}{s}%
+\renewcommand{\permittivitysymbol}{\kappa}%
+\renewcommand{\impermittivitysymbol}{\beta}%
+\renewcommand{\piezohsymbol}{h}%
+\renewcommand{\piezogsymbol}{g}%
+\renewcommand{\piezoesymbol}{e}%
+\renewcommand{\piezodsymbol}{d}%
+\renewcommand{\heatcapacitysymbol}{C}
+\renewcommand{\pyroelecsymbol}{p}
+\renewcommand{\heatofpolarizationsymbol}{t}
+\renewcommand{\thermalexpansionsymbol}{\alpha}
+\renewcommand{\heatofdeformationsymbol}{f}
+}
+
 
 \if@ieee\IEEENotation\fi
 \if@nye\NyeNotation\fi
@@ -155,5 +193,22 @@
 \newcommand{\piezod}{%
     \def\first{\@thermvar}%
 \piezodsymbol^{\first}}
-
+\newcommand{\heatcapacity}{%
+  \def\first{\@mechvar}%
+  \def\second{\@elvar}%
+  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
+\heatcapacitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+\newcommand{\pyroelec}{%
+    \def\first{\@mechvar}%
+\pyroelecsymbol^{\first}}
+\newcommand{\heatofpolarization}{%
+    \def\first{\@mechvar}%
+\heatofpolarizationsymbol^{\first}}
+\newcommand{\thermalexpansion}{%
+    \def\first{\@elvar}%
+\thermalexpansionsymbol^{\first}}
+\newcommand{\heatofdeformation}{%
+    \def\first{\@elvar}%
+\heatofdeformationsymbol^{\first}}
+    
 \endinput
