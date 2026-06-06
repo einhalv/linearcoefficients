@@ -17,7 +17,7 @@ This package helps dealing with the notation for linear elastic/piezoelectric ma
 \section{Notation}
 This package provides commands for the symbols of the physical quantities of a piezoelectric as well as for the linear coefficients relating them. The actual symbols are defined according to specified a notation. The primary objective of this functionality is to add a layer of abstraction that make reuse of \LaTeX{} code in a context that requires different notation.
 
-Two notations are predefined: One mostly congruent with the definitions in the IEEE standard on piezoelectricity \cite{IEEEpiezostd1996}. It is set with the command \verb|\IEEENotation| or by passing the option \verb|ieee| to the package. The other notation mostly follows Nye \cite{Nye1985}. Its command is \verb|\NyeNotation| and its option is \verb|nye|.
+Some notations are predefined: One mostly congruent with the definitions in the IEEE standard on piezoelectricity \cite{IEEEpiezostd1996}. It is set with the command \verb|\IEEENotation| or by passing the option \verb|IEEE| to the package. The other notations follow Nye \cite{Nye1985}, Ikeda \cite{Ikeda1996} and Mason \cite{Mason1958}, The correspoding options are \verb|Nye|, \verb|Ikeda| and \verb|Mason| with respective commands \verb|\NyeNotation|, \verb|\IkedaNotation|, \verb|\MasonNotation|. 
 
 Any number of notational options can be given to the package. The last one in the options list is the one chosen. If none is given, the package defaults to the IEEE-like notation. This defines the notation globally in the document.
 The predefined notations are given in table \ref{tab:notations} which shows the physical quantity, its corresponding symbol in each predefined notation and the command to generate it.
@@ -39,68 +39,108 @@ produces
 \begin{table}
   \centering
   \caption{Symbols for  the predefined notations (sans indices). \label{tab:notations}}
-  \begin{tabular}{llcc}
+  \begin{tabular}{llcccc}
     \hline\hline
-    Quantity &  Command & IEEE & Nye \\
+    Quantity &  Command & IEEE & Nye & Ikeda & Mason\\
     \hline 
     electric field & \verb|\efield|
                         & $\IEEENotation\efield$
-                               & $\NyeNotation\efield$\\
+                               & $\NyeNotation\efield$
+                                     & $\IkedaNotation\efield$
+                                             & $\MasonNotation\efield$\\
     electric flux density & \verb|\dfield|
                         & $\IEEENotation\dfield$
-                               & $\NyeNotation\dfield$\\
+                               & $\NyeNotation\dfield$
+                                     & $\IkedaNotation\dfield$
+                                             & $\MasonNotation\dfield$\\
     stress & \verb|\stress|
                         & $\IEEENotation\stress$
-                               & $\NyeNotation\stress$\\
+                               & $\NyeNotation\stress$
+                                     & $\IkedaNotation\stress$
+                                             & $\MasonNotation\stress$\\
     strain & \verb|\strain|
                         & $\IEEENotation\strain$
-                               & $\NyeNotation\strain$\\
+                               & $\NyeNotation\strain$
+                                     & $\IkedaNotation\strain$
+                                             & $\MasonNotation\strain$\\
     temperature & \verb|\temperature|
                         & $\IEEENotation\temperature$
-                               & $\NyeNotation\temperature$\\
+                               & $\NyeNotation\temperature$
+                                     & $\IkedaNotation\temperature$
+                                             & $\MasonNotation\temperature$\\
     entropy density & \verb|\entropydensity|
                         & $\IEEENotation\entropydensity$
-                               & $\NyeNotation\entropydensity$\\
+                               & $\NyeNotation\entropydensity$
+                                     & $\IkedaNotation\entropydensity$
+                                             & $\MasonNotation\entropydensity$\\
     \hline
     stiffness coefficient & \verb|\stiffness|
                         & $\IEEENotation\stiffness$
-                               & $\NyeNotation\stiffness$\\
+                               & $\NyeNotation\stiffness$
+                                     & $\IkedaNotation\stiffness$
+                                             & $\MasonNotation\stiffness$\\
     compliance coefficient & \verb|\compliance|
                         & $\IEEENotation\compliance$
-                               & $\NyeNotation\compliance$\\
+                               & $\NyeNotation\compliance$
+                                     & $\IkedaNotation\compliance$
+                                             & $\MasonNotation\compliance$\\
     permittivity & \verb|\permittivity|
                         & $\IEEENotation\permittivity$
-                               & $\NyeNotation\permittivity$\\
+                               & $\NyeNotation\permittivity$
+                                     & $\IkedaNotation\permittivity$
+                                             & $\MasonNotation\permittivity$\\
     impermittivity & \verb|\impermittivity|
                         & $\IEEENotation\impermittivity$
-                               & $\NyeNotation\impermittivity$\\
+                               & $\NyeNotation\impermittivity$
+                                     & $\IkedaNotation\impermittivity$
+                                             & $\MasonNotation\impermittivity$\\
     piezoelectric cofefficient &\verb|\piezoh|
                         & $\IEEENotation\piezoh$
-                               & $\NyeNotation\piezoh$\\
+                               & $\NyeNotation\piezoh$
+                                     & $\IkedaNotation\piezoh$
+                                             & $\MasonNotation\piezoh$\\
     piezoelectric cofefficient & \verb|\piezog|
                         & $\IEEENotation\piezog$
-                               & $\NyeNotation\piezog$\\
+                               & $\NyeNotation\piezog$
+                                     & $\IkedaNotation\piezog$
+                                             & $\MasonNotation\piezog$\\
     piezoelectric cofefficient & \verb|\piezoe|
                         & $\IEEENotation\piezoe$
-                               & $\NyeNotation\piezoe$\\
+                               & $\NyeNotation\piezoe$
+                                     & $\IkedaNotation\piezoe$
+                                             & $\MasonNotation\piezoe$\\
     piezoelectric cofefficient& \verb|\piezod|
                         & $\IEEENotation\piezod$
-                               & $\NyeNotation\piezod$\\
+                               & $\NyeNotation\piezod$
+                                     & $\IkedaNotation\piezod$
+                                             & $\MasonNotation\piezod$\\
     heat capacity & \verb|\heatcapacity|
                         & $\IEEENotation\heatcapacity$
-                               &  $\NyeNotation\heatcapacity$\\
+                               &  $\NyeNotation\heatcapacity$
+                                     &  $\IkedaNotation\heatcapacity$
+                                             &  $\MasonNotation\heatcapacity$\\
     pyroelectric coefficient & \verb|\pyroelec|
                         & $\IEEENotation\pyroelec$
-                               &  $\NyeNotation\pyroelec$\\
+                               &  $\NyeNotation\pyroelec$
+                                     &  $\IkedaNotation\pyroelec$
+                                             &  $\MasonNotation\pyroelec$\\
     heat of polarization & \verb|\heatofpolarization|
                         & $\IEEENotation\heatofpolarization$
-                               &  $\NyeNotation\heatofpolarization$\\
+                               &  $\NyeNotation\heatofpolarization$
+                                     &  $\IkedaNotation\heatofpolarization$
+                                             & $\MasonNotation
+                                               \heatofpolarization$\\
     coefficient of thermal expansion  & \verb|\thermalexpansion|
                         & $\IEEENotation\thermalexpansion$
-                               &  $\NyeNotation\thermalexpansion$\\
+                               &  $\NyeNotation\thermalexpansion$
+                                     &  $\IkedaNotation\thermalexpansion$
+                                             &  $\MasonNotation
+                                               \thermalexpansion$\\
     heat of deformation  & \verb|\heatofdeformation|
                         & $\IEEENotation\heatofdeformation$
-                               &  $\NyeNotation\heatofdeformation$\\
+                               &  $\NyeNotation\heatofdeformation$
+                                     &  $\IkedaNotation\heatofdeformation$
+                                             &  $\MasonNotation\heatofdeformation$\\
     \hline
   \end{tabular}
 \end{table}
@@ -171,8 +211,8 @@ for a set of linear constitutive equations. It renders as
 \freestress\freeefield\freetemperature
 {\NyeNotation
 \begin{align*}
-  \strain_{ij} & = \compliance_{ijkl}\stress_{kl} + \piezod_{kij}\efield_k + \thermalexpansion_{ij}\temperature \\
-  \dfield_i & = \piezod_{ikl}\stress_{kl} + \permittivity_{ik}\efield_k + \pyroelec_i\temperature \\
+  \strain_{ij} & = \compliance_{ijkl}\stress_{kl} + \piezod_{kij}\efield_k + \thermalexpansion_{ij}\Delta\temperature \\
+  \dfield_i & = \piezod_{ikl}\stress_{kl} + \permittivity_{ik}\efield_k + \pyroelec_i\Delta\temperature \\
   \Delta\entropydensity & = \thermalexpansion_{kl}\stress_{kl} + \pyroelec_k\efield_k + (\heatcapacity/\temperature)\Delta\temperature.
 \end{align*}
 }

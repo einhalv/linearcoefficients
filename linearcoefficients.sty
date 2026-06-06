@@ -4,11 +4,15 @@
 
 \newif\if@ieee
 \newif\if@nye
+\newif\if@ikeda
+\newif\if@mason
 
-\DeclareOption{ieee}{\@ieeetrue\@nyefalse}
-\DeclareOption{nye}{\@ieeefalse\@nyetrue}
+\DeclareOption{IEEE}{\@ieeetrue\@nyefalse\@ikedafalse\@masonfalse}
+\DeclareOption{Nye}{\@ieeefalse\@nyetrue\@ikedafalse\@masonfalse}
+\DeclareOption{Ikeda}{\@ieeefalse\@nyefalse\@ikedatrue\@masonfalse}
+\DeclareOption{Mason}{\@ieeefalse\@nyefalse\@ikedafalse\@masontrue}
 \DeclareOption*{\PackageWarning{linearcoefficients}{Unknown ‘\CurrentOption’}}
-\ExecuteOptions{ieee}
+\ExecuteOptions{IEEE}
 \ProcessOptions*\relax
 
 % utilities
@@ -34,6 +38,7 @@
 \newcommand{\heatofpolarizationsymbol}{}
 \newcommand{\thermalexpansionsymbol}{}
 \newcommand{\heatofdeformationsymbol}{}
+\newcommand{\massdensitysymbol}{}
 
 \newcommand{\IEEENotation}{% (IEEE std on piezoelectricity)
 \renewcommand{\efieldsymbol}{E}%
@@ -55,6 +60,7 @@
 \renewcommand{\heatofpolarizationsymbol}{?}
 \renewcommand{\thermalexpansionsymbol}{?}
 \renewcommand{\heatofdeformationsymbol}{?}
+\renewcommand{\massdensitysymbol}{?}
 }
 
 \newcommand{\NyeNotation}{% (Nye's notation)
@@ -77,9 +83,10 @@
 \renewcommand{\heatofpolarizationsymbol}{t}
 \renewcommand{\thermalexpansionsymbol}{\alpha}
 \renewcommand{\heatofdeformationsymbol}{f}
+\renewcommand{\massdensitysymbol}{?}
 }
 
-\newcommand{\IkedaNotation}{% (Ikeda's notation)
+\newcommand{\IkedaNotation}{% (Ikeda's notation) IN PROGRESS
 \renewcommand{\efieldsymbol}{E}%
 \renewcommand{\dfieldsymbol}{D}%
 \renewcommand{\stresssymbol}{\sigma}%
@@ -99,11 +106,36 @@
 \renewcommand{\heatofpolarizationsymbol}{t}
 \renewcommand{\thermalexpansionsymbol}{\alpha}
 \renewcommand{\heatofdeformationsymbol}{f}
+\renewcommand{\massdensitysymbol}{?}
 }
 
+\newcommand{\MasonNotation}{% (Mason's notation) IN PROGRESS
+\renewcommand{\efieldsymbol}{E}%
+\renewcommand{\dfieldsymbol}{D}%
+\renewcommand{\stresssymbol}{T}%
+\renewcommand{\strainsymbol}{S}%
+\renewcommand{\temperaturesymbol}{T}%
+\renewcommand{\entropydensitysymbol}{S}%?
+\renewcommand{\stiffnesssymbol}{c}%
+\renewcommand{\compliancesymbol}{s}%
+\renewcommand{\permittivitysymbol}{\kappa}%
+\renewcommand{\impermittivitysymbol}{\beta}%
+\renewcommand{\piezohsymbol}{h}%
+\renewcommand{\piezogsymbol}{g}%
+\renewcommand{\piezoesymbol}{e}%
+\renewcommand{\piezodsymbol}{d}%
+\renewcommand{\thermalexpansionsymbol}{\alpha}
+\renewcommand{\heatcapacitysymbol}{C}
+\renewcommand{\pyroelecsymbol}{q?}
+\renewcommand{\heatofpolarizationsymbol}{?}
+\renewcommand{\heatofdeformationsymbol}{?}
+\renewcommand{\massdensitysymbol}{\rho}
+}
 
 \if@ieee\IEEENotation\fi
 \if@nye\NyeNotation\fi
+\if@ikeda\IkedaNotation\fi
+\if@mason\MasonNotation\fi
 
 % free variables
 \newif\if@efieldfree
@@ -209,6 +241,7 @@
 \thermalexpansionsymbol^{\first}}
 \newcommand{\heatofdeformation}{%
     \def\first{\@elvar}%
-\heatofdeformationsymbol^{\first}}
-    
+    \heatofdeformationsymbol^{\first}}
+\newcommand{\massdensity}{\massdensitysymbol}
+
 \endinput
