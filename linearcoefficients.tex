@@ -1,8 +1,9 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[a4paper, 12pt]{article}
 %\usepackage[skip]{parskip}
 \usepackage{fullpage}
 \usepackage{amsmath}
-\usepackage[ieee]{linearcoefficients}
+\usepackage{rotating}
+\usepackage[IEEE]{linearcoefficients}
 
 \begin{document}
 \title{linearcoefficients -- version 1.0.0}
@@ -215,6 +216,75 @@ for a set of linear constitutive equations. It renders as
   \dfield_i & = \piezod_{ikl}\stress_{kl} + \permittivity_{ik}\efield_k + \pyroelec_i\Delta\temperature \\
   \Delta\entropydensity & = \thermalexpansion_{kl}\stress_{kl} + \pyroelec_k\efield_k + (\heatcapacity/\temperature)\Delta\temperature.
 \end{align*}
+}
+
+\section{Defining notation}
+
+
+\appendix
+\section{Thermodynamic potentials and equations of state}
+In this section, we rely on Mason's description in \cite{Mason1958} and stick to his notation.
+{\MasonNotation
+    {\clearpage\global\pdfpageattr\expandafter{\the\pdfpageattr/Rotate 90}
+  \begin{sidewaystable}%[ht]
+    \caption{Definitions of thermodynamic potential (densities) according to Mason \cite{Mason1958}.}
+    \begin{tabular}{lclll}
+      \hline\hline\rule{0pt}{2.5ex}Name
+      & Symbol & Free variables & Definition & Differential \\
+      \hline
+      \rule{0pt}{2.5ex}Internal energy
+           & $U$ & $\strain_{ij}$, $\dfield_k$, $\entropydensity$
+                            & --
+                            &  $\mathrm{d}U = \stress_{ij}\mathrm{d}\strain_{ij}
+                              + \efield_k\mathrm{d}\dfield_k
+                              + \temperature\mathrm{d}\entropydensity$\\
+      Enthalpy
+           & $H$ & $\stress_{ij}$, $\efield_k$, $\entropydensity$
+                                & $U - \stress_{ij}\strain_{ij}
+                                  - \efield_k\dfield_k$
+                            & $\mathrm{d}H = -\strain_{ij}\mathrm{d}\stress_{ij}
+                              - \dfield_k\mathrm{d}\efield_k
+                              + \temperature\mathrm{d}\entropydensity$\\
+      Elastic enthalpy
+           & $H_1$ & $\stress_{ij}$, $\dfield_k$, $\entropydensity$
+                                & $U - \stress_{ij}\strain_{ij}$
+                            & $\mathrm{d}H_1 = -\strain_{ij}\mathrm{d}\stress_{ij}
+                              + \efield_k\mathrm{d}\dfield_k
+                              + \temperature\mathrm{d}\entropydensity$\\
+      Electric enthalpy
+           & $H_2$ & $\strain_{ij}$, $\efield_k$, $\entropydensity$
+                                & $U - \efield_k\dfield_k$
+                            & $\mathrm{d}H_2 = \stress_{ij}\mathrm{d}\strain_{ij}
+                              - \dfield_k\mathrm{d}\efield_k
+                              + \temperature\mathrm{d}\entropydensity$\\
+      Free energy & $A$ & $\strain_{ij}$, $\dfield_k$, $\temperature$
+                            & $U - \temperature\entropydensity$
+                            &  $\mathrm{d}A = \stress_{ij}\mathrm{d}\strain_{ij}
+                              + \efield_k\mathrm{d}\dfield_k
+                              - \entropydensity\mathrm{d}\temperature$\\
+      Gibbs function
+           & $G$ & $\stress_{ij}$, $\efield_k$, $\entropydensity$
+                                & $A - \stress_{ij}\strain_{ij}
+                                  - \efield_k\dfield_k$
+                            & $\mathrm{d}G = -\strain_{ij}\mathrm{d}\stress_{ij}
+                              - \dfield_k\mathrm{d}\efield_k
+                              -\entropydensity\mathrm{d}\temperature$\\
+      Elastic Gibbs function
+           & $G_1$ & $\stress_{ij}$, $\dfield_k$, $\entropydensity$
+                                & $A - \stress_{ij}\strain_{ij}$
+                            & $\mathrm{d}G_1 = -\strain_{ij}\mathrm{d}\stress_{ij}
+                              + \efield_k\mathrm{d}\dfield_k
+                              - \entropydensity\mathrm{d}\temperature$\\
+      Electric Gibbs function
+           & $G_2$ & $\strain_{ij}$, $\efield_k$, $\entropydensity$
+                                & $A - \efield_k\dfield_k$
+                            & $\mathrm{d}G_2 = \stress_{ij}\mathrm{d}\strain_{ij}
+                              - \dfield_k\mathrm{d}\efield_k
+                              - \entropydensity\mathrm{d}\temperature$\\
+      \hline 
+    \end{tabular}
+  \end{sidewaystable}
+  \clearpage\global\pdfpageattr\expandafter{\the\pdfpageattr/Rotate 0}}
 }
 
 \bibliographystyle{plain}
