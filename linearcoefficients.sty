@@ -18,7 +18,8 @@
 % utilities
 \def\@ifempty#1{\edef\temp{#1}\ifx\temp\empty}
 
-% symbols 
+  % symbols
+\newcommand{\polarizationsymbol}{}
 \newcommand{\efieldsymbol}{}
 \newcommand{\dfieldsymbol}{}
 \newcommand{\stresssymbol}{}
@@ -41,6 +42,7 @@
 \newcommand{\massdensitysymbol}{}
 
 \newcommand{\IEEENotation}{% (IEEE std on piezoelectricity)
+\renewcommand{\polarizationsymbol}{P}%
 \renewcommand{\efieldsymbol}{E}%
 \renewcommand{\dfieldsymbol}{D}%
 \renewcommand{\stresssymbol}{T}%
@@ -64,6 +66,7 @@
 }
 
 \newcommand{\NyeNotation}{% (Nye's notation)
+\renewcommand{\polarizationsymbol}{P}%
 \renewcommand{\efieldsymbol}{E}%
 \renewcommand{\dfieldsymbol}{D}%
 \renewcommand{\stresssymbol}{\sigma}%
@@ -87,6 +90,7 @@
 }
 
 \newcommand{\IkedaNotation}{% (Ikeda's notation) IN PROGRESS
+\renewcommand{\polarizationsymbol}{P}%
 \renewcommand{\efieldsymbol}{E}%
 \renewcommand{\dfieldsymbol}{D}%
 \renewcommand{\stresssymbol}{\sigma}%
@@ -110,6 +114,7 @@
 }
 
 \newcommand{\MasonNotation}{% (Mason's notation) IN PROGRESS
+\renewcommand{\polarizationsymbol}{P}%
 \renewcommand{\efieldsymbol}{E}%
 \renewcommand{\dfieldsymbol}{D}%
 \renewcommand{\stresssymbol}{T}%
@@ -187,6 +192,7 @@
 \def\@mechvar{\if@stressfree\stress\fi\if@strainfree\strain\fi}
 \def\@elvar{\if@efieldfree\efield\fi\if@dfieldfree\dfield\fi}
 \def\@thermvar{\if@temperaturefree\temperature\fi\if@entropydensityfree\entropydensity\fi}
+\newcommand{\polarization}{\polarizationsymbol}
 \newcommand{\efield}{\efieldsymbol}
 \newcommand{\dfield}{\dfieldsymbol}
 \newcommand{\stress}{\stresssymbol}

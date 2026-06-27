@@ -49,6 +49,11 @@ produces
                                & $\NyeNotation\efield$
                                      & $\IkedaNotation\efield$
                                              & $\MasonNotation\efield$\\
+    electric polarization & \verb|\polarization|
+                        & $\IEEENotation\polarization$
+                               & $\NyeNotation\polarization$
+                                     & $\IkedaNotation\polarization$
+                                             & $\MasonNotation\polarization$\\
     electric flux density & \verb|\dfield|
                         & $\IEEENotation\dfield$
                                & $\NyeNotation\dfield$
@@ -223,11 +228,13 @@ for a set of linear constitutive equations. It renders as
 
 \appendix
 \section{Thermodynamic potentials and equations of state}
-In this section, we rely on Mason's description in \cite{Mason1958} and stick to his notation.
+In this section, we rely on Mason's description in \cite{Mason1958} and stick to his notation. The constitutive equations can be derived from the thermodynamic potentials in table \ref{tab:thermodyn_potentials}.
+
 {\MasonNotation
     {\clearpage\global\pdfpageattr\expandafter{\the\pdfpageattr/Rotate 90}
   \begin{sidewaystable}%[ht]
     \caption{Definitions of thermodynamic potential (densities) according to Mason \cite{Mason1958}.}
+    \label{tab:thermodyn_potentials}
     \begin{tabular}{lclll}
       \hline\hline\rule{0pt}{2.5ex}Name
       & Symbol & Free variables & Definition & Differential \\
@@ -263,20 +270,20 @@ In this section, we rely on Mason's description in \cite{Mason1958} and stick to
                               + \efield_k\mathrm{d}\dfield_k
                               - \entropydensity\mathrm{d}\temperature$\\
       Gibbs function
-           & $G$ & $\stress_{ij}$, $\efield_k$, $\entropydensity$
+           & $G$ & $\stress_{ij}$, $\efield_k$, $\temperature$
                                 & $A - \stress_{ij}\strain_{ij}
                                   - \efield_k\dfield_k$
                             & $\mathrm{d}G = -\strain_{ij}\mathrm{d}\stress_{ij}
                               - \dfield_k\mathrm{d}\efield_k
                               -\entropydensity\mathrm{d}\temperature$\\
       Elastic Gibbs function
-           & $G_1$ & $\stress_{ij}$, $\dfield_k$, $\entropydensity$
+           & $G_1$ & $\stress_{ij}$, $\dfield_k$, $\temperature$
                                 & $A - \stress_{ij}\strain_{ij}$
                             & $\mathrm{d}G_1 = -\strain_{ij}\mathrm{d}\stress_{ij}
                               + \efield_k\mathrm{d}\dfield_k
                               - \entropydensity\mathrm{d}\temperature$\\
       Electric Gibbs function
-           & $G_2$ & $\strain_{ij}$, $\efield_k$, $\entropydensity$
+           & $G_2$ & $\strain_{ij}$, $\efield_k$, $\temperature$
                                 & $A - \efield_k\dfield_k$
                             & $\mathrm{d}G_2 = \stress_{ij}\mathrm{d}\strain_{ij}
                               - \dfield_k\mathrm{d}\efield_k
@@ -285,8 +292,67 @@ In this section, we rely on Mason's description in \cite{Mason1958} and stick to
     \end{tabular}
   \end{sidewaystable}
   \clearpage\global\pdfpageattr\expandafter{\the\pdfpageattr/Rotate 0}}
-}
 
+From the table, we see that the fields can be given in terms of derivatives of the thermodynamic potentials as
+\begin{align}
+  \stress_{ij} & = \frac{\partial U}{\partial\strain_{ij}}
+                 = \frac{\partial H_2}{\partial\strain_{ij}}
+                 = \frac{\partial A}{\partial\strain_{ij}}
+                 = \frac{\partial G_2}{\partial\strain_{ij}},\\
+  \efield_{k} & = \frac{\partial U}{\partial\dfield_{k}}
+                 = \frac{\partial H_1}{\partial\dfield_{k}}
+                 = \frac{\partial A}{\partial\dfield_{k}}
+                 = \frac{\partial G_1}{\partial\dfield_{k}},\\
+  \temperature & = \frac{\partial U}{\partial\entropydensity}
+                 = \frac{\partial H}{\partial\entropydensity}
+                 = \frac{\partial H_1}{\partial\entropydensity}
+                 = \frac{\partial H_2}{\partial\entropydensity},\\
+  \strain_{ij} & = -\frac{\partial H}{\partial\stress_{ij}}
+                 = -\frac{\partial H_1}{\partial\stress_{ij}}
+                 = -\frac{\partial G}{\partial\stress_{ij}}
+                 = -\frac{\partial G_1}{\partial\stress_{ij}},\\
+  \dfield_{k} & = -\frac{\partial H}{\partial\efield_{k}}
+                = -\frac{\partial H_2}{\partial\efield_{k}}
+                = -\frac{\partial G}{\partial\efield_{k}}
+                = -\frac{\partial G_2}{\partial\efield_{k}},\\
+  \entropydensity & = -\frac{\partial U}{\partial\temperature}
+                    = -\frac{\partial H}{\partial\temperature}
+                    = -\frac{\partial H_1}{\partial\temperature}
+                    = -\frac{\partial H_2}{\partial\temperature}.
+\end{align}
+
+The linear coefficients can then be defined as the first derivatives of a field under
+certain conditions on the other free variables or as a second derivative of a potential.
+For stiffness and compliance, we have
+\begin{align}
+  {\freedfield\freeentropydensity \stiffness_{ijkl}}
+  & = \frac{\partial^2U}{\partial\strain_{kl}\partial\strain_{ij}},
+  &
+  {\freeefield\freeentropydensity \stiffness_{ijkl}}
+  & = \frac{\partial^2H_2}{\partial\strain_{kl}\partial\strain_{ij}},
+  &
+  {\freedfield\freetemperature \stiffness_{ijkl}}
+  & = \frac{\partial^2A}{\partial\strain_{kl}\partial\strain_{ij}},
+  &
+  {\freeefield\freetemperature \stiffness_{ijkl}}
+  & = \frac{\partial^2G_2}{\partial\strain_{kl}\partial\strain_{ij}},\\
+  {\freeefield\freeentropydensity \compliance_{ijkl}}
+  & = -\frac{\partial^2H}{\partial\stress_{kl}\partial\stress_{ij}},
+  &
+  {\freedfield\freeentropydensity \compliance_{ijkl}}
+  & = -\frac{\partial^2H_1}{\partial\stress_{kl}\partial\stress_{ij}},    
+  &
+  {\freeefield\freetemperature \compliance_{ijkl}}
+  & = -\frac{\partial^2G}{\partial\stress_{kl}\partial\stress_{ij}},  
+  &
+  {\freedfield\freetemperature \compliance_{ijkl}}
+  & = -\frac{\partial^2G_1}{\partial\stress_{kl}\partial\stress_{ij}}.    
+\end{align}
+
+
+
+
+}
 \bibliographystyle{plain}
 \bibliography{piezo, books}
 
