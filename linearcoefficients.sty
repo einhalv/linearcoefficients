@@ -221,16 +221,16 @@
 \impermittivitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
 \newcommand{\piezoh}{%
     \def\first{\@thermvar}%
-\piezohsymbol^{\first}}
+\@ifempty{\first}\piezohsymbol\else\piezohsymbol^{\first}\fi}
 \newcommand{\piezog}{%
     \def\first{\@thermvar}%
-\piezogsymbol^{\first}}
+\@ifempty{\first}\piezogsymbol\else\piezogsymbol^{\first}\fi}
 \newcommand{\piezoe}{%
     \def\first{\@thermvar}%
-\piezoesymbol^{\first}}
+\@ifempty{\first}\piezoesymbol\else\piezoesymbol^{\first}\fi}
 \newcommand{\piezod}{%
     \def\first{\@thermvar}%
-\piezodsymbol^{\first}}
+\@ifempty{\first}\piezodsymbol\else\piezodsymbol^{\first}\fi}
 \newcommand{\heatcapacity}{%
   \def\first{\@mechvar}%
   \def\second{\@elvar}%
@@ -246,8 +246,8 @@
     \def\first{\@elvar}%
 \thermalexpansionsymbol^{\first}}
 \newcommand{\heatofdeformation}{%
-    \def\first{\@elvar}%
-    \heatofdeformationsymbol^{\first}}
+  \def\first{\@elvar}%
+\heatofdeformationsymbol^{\first}}
 \newcommand{\massdensity}{\massdensitysymbol}
 
 \endinput
