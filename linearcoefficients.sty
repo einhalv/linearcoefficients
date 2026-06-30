@@ -200,10 +200,14 @@
 \newcommand{\temperature}{\temperaturesymbol}
 \newcommand{\entropydensity}{\entropydensitysymbol}
 \newcommand{\stiffness}{%
-  \def\first{\@elvar}%
-  \def\second{\@thermvar}%
-  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
-\stiffnesssymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+\def\first{\@elvar}%
+\def\second{\@thermvar}%
+\def\alt{\@ifempty{\second}\relax\else,\second\fi}%
+\def\XXX{\first\@ifempty{\first}\second\else\alt\fi}%
+%\@ifempty{\XXX}\stiffnesssymbol\else%
+\stiffnesssymbol^{\XXX}%
+%\fi
+}
 \newcommand{\compliance}{%
   \def\first{\@elvar}%
   \def\second{\@thermvar}%
@@ -238,16 +242,16 @@
 \heatcapacitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
 \newcommand{\pyroelec}{%
     \def\first{\@mechvar}%
-\pyroelecsymbol^{\first}}
+\@ifempty{\first}\pyroelecsymbol\else\pyroelecsymbol^{\first}\fi}
 \newcommand{\heatofpolarization}{%
     \def\first{\@mechvar}%
-\heatofpolarizationsymbol^{\first}}
+\@ifempty{\first}\heatofpolarizationsymbol\else\heatofpolarizationsymbol^{\first}\fi}
 \newcommand{\thermalexpansion}{%
     \def\first{\@elvar}%
-\thermalexpansionsymbol^{\first}}
+\@ifempty{\first}\thermalexpansionsymbol\else\thermalexpansionsymbol^{\first}\fi}
 \newcommand{\heatofdeformation}{%
   \def\first{\@elvar}%
-\heatofdeformationsymbol^{\first}}
+\@ifempty{\first}\heatofdeformationsymbol\else\heatofdeformationsymbol^{\first}\fi}
 \newcommand{\massdensity}{\massdensitysymbol}
 
 \endinput
