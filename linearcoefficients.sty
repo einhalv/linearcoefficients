@@ -192,6 +192,7 @@
 \def\@mechvar{\if@stressfree\stress\fi\if@strainfree\strain\fi}
 \def\@elvar{\if@efieldfree\efield\fi\if@dfieldfree\dfield\fi}
 \def\@thermvar{\if@temperaturefree\temperature\fi\if@entropydensityfree\entropydensity\fi}
+\newcount\@argc%
 \newcommand{\polarization}{\polarizationsymbol}
 \newcommand{\efield}{\efieldsymbol}
 \newcommand{\dfield}{\dfieldsymbol}
@@ -200,13 +201,14 @@
 \newcommand{\temperature}{\temperaturesymbol}
 \newcommand{\entropydensity}{\entropydensitysymbol}
 \newcommand{\stiffness}{%
-\def\first{\@elvar}%
-\def\second{\@thermvar}%
-\def\alt{\@ifempty{\second}\relax\else,\second\fi}%
-\def\XXX{\first\@ifempty{\first}\second\else\alt\fi}%
-%\@ifempty{\XXX}\stiffnesssymbol\else%
-\stiffnesssymbol^{\XXX}%
-%\fi
+\@argc=2%
+\@ifempty{\@elvar}\advance\@argc by -1\fi%
+\@ifempty{\@thermvar}\advance\@argc by -1\fi%
+\ifcase\@argc\relax
+  \stiffnesssymbol\or
+  \stiffnesssymbol^{\@elvar\@thermvar}\or
+  \stiffnesssymbol^{\@elvar,\@thermvar}
+\fi
 }
 \newcommand{\compliance}{%
   \def\first{\@elvar}%
