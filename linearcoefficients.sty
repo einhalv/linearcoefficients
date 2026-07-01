@@ -192,7 +192,21 @@
 \def\@mechvar{\if@stressfree\stress\fi\if@strainfree\strain\fi}
 \def\@elvar{\if@efieldfree\efield\fi\if@dfieldfree\dfield\fi}
 \def\@thermvar{\if@temperaturefree\temperature\fi\if@entropydensityfree\entropydensity\fi}
-\newcount\@argc%
+\newcount\@argc
+\def\@doublesuper#1#2#3{%
+  \@argc 2\relax
+  \@ifempty{#2}
+    \advance\@argc -1\relax
+  \fi
+  \@ifempty{#3}
+    \advance\@argc -1\relax
+  \fi
+  \ifcase\@argc\relax
+    #1\or
+    #1^{#2#3}\or
+    #1^{#2,#3}
+  \fi 
+}
 \newcommand{\polarization}{\polarizationsymbol}
 \newcommand{\efield}{\efieldsymbol}
 \newcommand{\dfield}{\dfieldsymbol}
@@ -201,59 +215,43 @@
 \newcommand{\temperature}{\temperaturesymbol}
 \newcommand{\entropydensity}{\entropydensitysymbol}
 \newcommand{\stiffness}{%
-\@argc=2%
-\@ifempty{\@elvar}\advance\@argc by -1\fi%
-\@ifempty{\@thermvar}\advance\@argc by -1\fi%
-\ifcase\@argc\relax
-  \stiffnesssymbol\or
-  \stiffnesssymbol^{\@elvar\@thermvar}\or
-  \stiffnesssymbol^{\@elvar,\@thermvar}
-\fi
+\@doublesuper{\stiffnesssymbol}{\@elvar}{\@thermvar}  
 }
 \newcommand{\compliance}{%
-  \def\first{\@elvar}%
-  \def\second{\@thermvar}%
-  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
-\compliancesymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+  \@doublesuper{\compliancesymbol}{\@elvar}{\@thermvar}}
 \newcommand{\permittivity}{%
-  \def\first{\@mechvar}%
-  \def\second{\@thermvar}%
-  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
-\permittivitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+  \@doublesuper{\permittivitysymbol}{\@mechvar}{\@thermvar}}
 \newcommand{\impermittivity}{%
-  \def\first{\@mechvar}%
-  \def\second{\@thermvar}%
-  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
-\impermittivitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+  \@doublesuper{\impermittivitysymbol}{\@mechvar}{\@thermvar}}
 \newcommand{\piezoh}{%
-    \def\first{\@thermvar}%
-\@ifempty{\first}\piezohsymbol\else\piezohsymbol^{\first}\fi}
+  \def\first{\@thermvar}%
+  \@ifempty{\first}\piezohsymbol\else\piezohsymbol^{\first}\fi}
 \newcommand{\piezog}{%
-    \def\first{\@thermvar}%
-\@ifempty{\first}\piezogsymbol\else\piezogsymbol^{\first}\fi}
+  \def\first{\@thermvar}%
+  \@ifempty{\first}\piezogsymbol\else\piezogsymbol^{\first}\fi}
 \newcommand{\piezoe}{%
-    \def\first{\@thermvar}%
-\@ifempty{\first}\piezoesymbol\else\piezoesymbol^{\first}\fi}
+  \def\first{\@thermvar}%
+  \@ifempty{\first}\piezoesymbol\else\piezoesymbol^{\first}\fi}
 \newcommand{\piezod}{%
-    \def\first{\@thermvar}%
-\@ifempty{\first}\piezodsymbol\else\piezodsymbol^{\first}\fi}
+  \def\first{\@thermvar}%
+  \@ifempty{\first}\piezodsymbol\else\piezodsymbol^{\first}\fi}
 \newcommand{\heatcapacity}{%
   \def\first{\@mechvar}%
   \def\second{\@elvar}%
   \def\alt{\@ifempty{\second}\relax\else,\second\fi}
-\heatcapacitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+  \heatcapacitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
 \newcommand{\pyroelec}{%
-    \def\first{\@mechvar}%
-\@ifempty{\first}\pyroelecsymbol\else\pyroelecsymbol^{\first}\fi}
+  \def\first{\@mechvar}%
+  \@ifempty{\first}\pyroelecsymbol\else\pyroelecsymbol^{\first}\fi}
 \newcommand{\heatofpolarization}{%
-    \def\first{\@mechvar}%
-\@ifempty{\first}\heatofpolarizationsymbol\else\heatofpolarizationsymbol^{\first}\fi}
+  \def\first{\@mechvar}%
+  \@ifempty{\first}\heatofpolarizationsymbol\else\heatofpolarizationsymbol^{\first}\fi}
 \newcommand{\thermalexpansion}{%
-    \def\first{\@elvar}%
-\@ifempty{\first}\thermalexpansionsymbol\else\thermalexpansionsymbol^{\first}\fi}
+  \def\first{\@elvar}%
+  \@ifempty{\first}\thermalexpansionsymbol\else\thermalexpansionsymbol^{\first}\fi}
 \newcommand{\heatofdeformation}{%
   \def\first{\@elvar}%
-\@ifempty{\first}\heatofdeformationsymbol\else\heatofdeformationsymbol^{\first}\fi}
+  \@ifempty{\first}\heatofdeformationsymbol\else\heatofdeformationsymbol^{\first}\fi}
 \newcommand{\massdensity}{\massdensitysymbol}
 
 \endinput
