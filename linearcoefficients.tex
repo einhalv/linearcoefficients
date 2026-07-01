@@ -12,7 +12,7 @@
 \maketitle
 
 \abstract{
-This package helps dealing with the notation for linear elastic/piezoelectric materials by defining commands for fields and coefficients as well as support for easy switching between different notations. There is also support for handling the superscripts denoting the condtions for the coeffients. 
+This package helps dealing with the notation for linear elastic/piezoelectric materials by defining commands for fields and coefficients as well as support for easy switching between different notations. There is also support for handling the superscripts denoting the conditions for the coeffients. 
 }
 
 \section{Notation}
@@ -153,7 +153,7 @@ produces
 
 
 \section{Free  variables}
-It is customary to denote the conditions under which a linear coefficient is measured by superscripts. For example, a stiffness constant measured at constant electric field and temperature is written ${\freeefield\freetemperature\stiffness_{ij}}$ in the IEEE-like notation. It is possible to accomplish this by writing \verb|c^{\efield,\temperature}_{ij}|, but the package provides notation to automate the inclusion of such superscripts. 
+It is customary to denote the conditions under which a linear coefficient is measured by superscripts. For example, a stiffness constant measured at constant electric field and temperature is written ${\freeefield\freetemperature\stiffness_{ij}}$ in the IEEE-like notation. It is possible to accomplish this by writing \verb|\stiffness^{\efield,\temperature}_{ij}|, but the package provides notation to automate the inclusion of such superscripts. 
 
 The automated notation hinges on declaration of at most one field variable from
 each of the domains mechanical, electrical and thermal as free variables.
@@ -198,6 +198,7 @@ free variables.
 
 As an example usage, consider the code
 \begin{verbatim}
+\freestress\freeefield\freetemperature
 {\NyeNotation
 \begin{align*}
   \strain_{ij} & = \compliance_{ijkl}\stress_{kl} +
@@ -223,8 +224,35 @@ for a set of linear constitutive equations. It renders as
 \end{align*}
 }
 
-\section{Defining notation}
-
+\section{Defining own notation}
+The user can define own notation by redefining the underlying symbols.
+For example, if we want capital $C$ instead of lower case $c$ for stiffness defined in the standard notations,
+we can write \verb|\renewcommand{\stiffness]{C}|. This is how the standard notions are defined. As an example, the definition of \verb|\IkedaNotation| is
+\begin{verbatim}
+\newcommand{\IkedaNotation}{% (Ikeda's notation)
+\renewcommand{\polarizationsymbol}{P}
+\renewcommand{\efieldsymbol}{E}
+\renewcommand{\dfieldsymbol}{D}
+\renewcommand{\stresssymbol}{T}
+\renewcommand{\strainsymbol}{S}
+\renewcommand{\temperaturesymbol}{\Theta}
+\renewcommand{\entropydensitysymbol}{\sigma}
+\renewcommand{\stiffnesssymbol}{c}
+\renewcommand{\compliancesymbol}{s}
+\renewcommand{\permittivitysymbol}{\epsilon}
+\renewcommand{\impermittivitysymbol}{\beta}
+\renewcommand{\piezohsymbol}{h}
+\renewcommand{\piezogsymbol}{g}
+\renewcommand{\piezoesymbol}{e}
+\renewcommand{\piezodsymbol}{d}
+\renewcommand{\heatcapacitysymbol}{C}
+\renewcommand{\pyroelecsymbol}{p}
+\renewcommand{\heatofpolarizationsymbol}{q}
+\renewcommand{\thermalexpansionsymbol}{\alpha}
+\renewcommand{\heatofdeformationsymbol}{f}
+\renewcommand{\massdensitysymbol}{\rho}
+}
+\end{verbatim}
 
 \appendix
 \section{Thermodynamic potentials and equations of state}
