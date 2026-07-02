@@ -100,22 +100,22 @@ produces
                                & $\NyeNotation\impermittivity$
                                      & $\IkedaNotation\impermittivity$
                                              & $\MasonNotation\impermittivity$\\
-    piezoelectric cofefficient &\verb|\piezoh|
+    piezoelectric coefficient &\verb|\piezoh|
                         & $\IEEENotation\piezoh$
                                & $\NyeNotation\piezoh$
                                      & $\IkedaNotation\piezoh$
                                              & $\MasonNotation\piezoh$\\
-    piezoelectric cofefficient & \verb|\piezog|
+    piezoelectric coefficient & \verb|\piezog|
                         & $\IEEENotation\piezog$
                                & $\NyeNotation\piezog$
                                      & $\IkedaNotation\piezog$
                                              & $\MasonNotation\piezog$\\
-    piezoelectric cofefficient & \verb|\piezoe|
+    piezoelectric coefficient & \verb|\piezoe|
                         & $\IEEENotation\piezoe$
                                & $\NyeNotation\piezoe$
                                      & $\IkedaNotation\piezoe$
                                              & $\MasonNotation\piezoe$\\
-    piezoelectric cofefficient& \verb|\piezod|
+    piezoelectric coefficient& \verb|\piezod|
                         & $\IEEENotation\piezod$
                                & $\NyeNotation\piezod$
                                      & $\IkedaNotation\piezod$
@@ -262,9 +262,9 @@ we can write \verb|\renewcommand{\stiffness}{C}|. This is how the standard notio
 
 \appendix
 \section{Thermodynamic potentials and equations of state}
-In this section, we rely on Mason's description in \cite{Mason1958} and stick to his notation. The constitutive equations can be derived from the thermodynamic potentials in table~\ref{tab:thermodyn_potentials}.
+In this section, we rely on Mason's description in \cite{Mason1958} but use Ikeda's  notation. The constitutive equations can be derived from the thermodynamic potentials in table~\ref{tab:thermodyn_potentials}.
 
-{\MasonNotation
+{\IkedaNotation
     {\clearpage\global\pdfpageattr\expandafter{\the\pdfpageattr/Rotate 90}
   \begin{sidewaystable}%[ht]
     \caption{Definitions of thermodynamic potential (densities) according to Mason \cite{Mason1958}.}
@@ -349,10 +349,10 @@ From the table, we see that the fields can be given in terms of derivatives of t
                 = -\frac{\partial H_2}{\partial\efield_{k}}
                 = -\frac{\partial G}{\partial\efield_{k}}
                 = -\frac{\partial G_2}{\partial\efield_{k}},\\
-  \entropydensity & = -\frac{\partial U}{\partial\temperature}
-                    = -\frac{\partial H}{\partial\temperature}
-                    = -\frac{\partial H_1}{\partial\temperature}
-                    = -\frac{\partial H_2}{\partial\temperature}.
+  \entropydensity & = -\frac{\partial A}{\partial\temperature}
+                    = -\frac{\partial G}{\partial\temperature}
+                    = -\frac{\partial G_1}{\partial\temperature}
+                    = -\frac{\partial G_2}{\partial\temperature}.
 \end{align}
 
 The linear coefficients can then be defined as the first derivatives of a field under
@@ -382,9 +382,69 @@ For stiffness and compliance, we have
   {\freedfield\freetemperature \compliance_{ijkl}}
   & = -\frac{\partial^2G_1}{\partial\stress_{kl}\partial\stress_{ij}}.    
 \end{align}
+Impermittivities and permittivities are
+\begin{align}
+  {\freestrain\freeentropydensity\impermittivity_{kl}}
+  & = \frac{\partial U}{\partial\dfield_{k}\partial\dfield_{l}},
+    &
+  {\freestress\freeentropydensity\impermittivity_{kl}}
+  & = \frac{\partial H_1}{\partial\dfield_{k}\partial\dfield_{l}},
+    &
+  {\freestrain\freetemperature\impermittivity_{kl}}
+  & = \frac{\partial A}{\partial\dfield_{k}\partial\dfield_{l}},
+    &
+  {\freestress\freetemperature\impermittivity_{kl}}
+  & = \frac{\partial G_1}{\partial\dfield_{k}\partial\dfield_{l}},
+  \\
+  {\freestress\freeentropydensity\permittivity_{kl}}
+  & = -\frac{\partial^2 H}{\partial\efield_{k}\partial\efield_{l}},
+  &  
+    {\freestrain\freeentropydensity\permittivity_{kl}}
+  & = -\frac{\partial^2 H_2}{\partial\efield_{k}\partial\efield_{l}},
+  &
+    {\freestress\freetemperature\permittivity_{kl}}
+  & = -\frac{\partial^2 G}{\partial\efield_{k}\partial\efield_{l}},
+  &
+    {\freestrain\freetemperature\permittivity_{kl}}
+  & = -\frac{\partial^2 G_2}{\partial\efield_{k}\partial\efield_{l}}.
+\end{align}
+We note that without specifiying conditions, the specifc heat capacity ${\nofree\heatcapacity}$ is given by
+\begin{equation}
+  {\nofree
+  \frac{\massdensity\heatcapacity}{\temperature}
+  = \frac{\mathrm{d}\entropydensity}{\mathrm{d}\temperature}}
+\end{equation}
+hence the different specific heat capacities can be determined as
+\begin{align}
+  {\freestrain\freedfield
+  \frac{\massdensity\heatcapacity}{\temperature}}
+  & = -\frac{\partial^2 A}{\partial\temperature^2},
+  &
+    {\freestress\freeefield
+    \frac{\massdensity\heatcapacity}{\temperature}}
+  & = -\frac{\partial^2 G}{\partial\temperature^2},
+    &
+      {\freestress\freedfield
+      \frac{\massdensity\heatcapacity}{\temperature}}
+  & = -\frac{\partial^2 G_1}{\partial\temperature^2},
+    &
+    {\freestrain\freeefield
+      \frac{\massdensity\heatcapacity}{\temperature}}
+  & = -\frac{\partial^2 G_2}{\partial\temperature^2}.
+\end{align}
+There is no common terminology for the reciprocal of the heat capacity,
+so we do not consider the four other relations corresponding to that.
 
-
-
+Next we consider piezoelectric coupling constants:
+\begin{align}
+  {\freeentropydensity\piezoh_{kij}}
+  & = -\frac{\partial^2 U}{\partial\dfield_{k}\partial\strain_{ij}}
+  &
+  {\freetemperature\piezoh_{kij}}
+  & = -\frac{\partial^2 A}{\partial\dfield_{k}\partial\strain_{ij}}
+  % = \frac{\partial H_1}{\partial\dfield_{k}}
+%  = \frac{\partial G_1}{\partial\dfield_{k}}
+\end{align}
 
 }
 \bibliographystyle{plain}
