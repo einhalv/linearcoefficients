@@ -233,7 +233,7 @@ for a set of linear constitutive equations. It renders as
 \section{Defining own notation}
 The user can define own notation by redefining the underlying symbols.
 For example, if we want capital $C$ instead of lower case $c$ for stiffness defined in the standard notations,
-we can write \verb|\renewcommand{\stiffness}{C}|. This is how the standard notions are defined. As an example, the definition of \verb|\IkedaNotation| is
+we can write \verb|\renewcommand{\stiffnesssymbol}{C}|. This is how the standard notions are defined. As an example, the definition of \verb|\IkedaNotation| is
 \begin{verbatim}
 \newcommand{\IkedaNotation}{% (Ikeda's notation)
 \renewcommand{\polarizationsymbol}{P}
@@ -435,16 +435,42 @@ hence the different specific heat capacities can be determined as
 There is no common terminology for the reciprocal of the heat capacity,
 so we do not consider the four other relations corresponding to that.
 
-Next we consider piezoelectric coupling constants:
+The piezoelectric coupling constants are
 \begin{align}
   {\freeentropydensity\piezoh_{kij}}
-  & = -\frac{\partial^2 U}{\partial\dfield_{k}\partial\strain_{ij}}
+  & = -\frac{\partial^2 U}{\partial\dfield_{k}\partial\strain_{ij}},
   &
   {\freetemperature\piezoh_{kij}}
-  & = -\frac{\partial^2 A}{\partial\dfield_{k}\partial\strain_{ij}}
-  % = \frac{\partial H_1}{\partial\dfield_{k}}
-%  = \frac{\partial G_1}{\partial\dfield_{k}}
+  & = -\frac{\partial^2 A}{\partial\dfield_{k}\partial\strain_{ij}}, \\
+  {\freeentropydensity\piezog_{kij}}
+  & = -\frac{\partial^2 H_1}{\partial\dfield_{k}\partial\stress{ij}},
+  &
+   {\freetemperature\piezog_{kij}}  
+  & = -\frac{\partial G_1}{\partial\dfield_{k}\partial\stress{ij}},
+  \\
+  {\freeentropydensity\piezoe_{kij}}
+  & = -\frac{\partial^2 H_2}{\partial\efield_{k}\partial\strain_{ij}},
+  &
+    {\freetemperature\piezoe_{kij}}
+  &  = -\frac{\partial^2 G_2}{\partial\efield_{k}\partial\strain_{ij}},  
+  \\
+  {\freeentropydensity\piezod_{kij}}
+  & = -\frac{\partial H}{\partial\efield_{k}\partial\stress{ij}},
+  &
+    {\freetemperature\piezod_{kij}}
+  & = -\frac{\partial G}{\partial\efield_{k}\partial\stress{ij}}.
 \end{align}
+
+The pyroelectric cofficients are
+\begin{align}
+  {\freestress\pyroelec_{k}}
+  & =  -\frac{\partial^2 G}{\partial\efield_{k}\partial\temperature},
+  &                
+    {\freestrain\pyroelec_{k}}
+  & =  -\frac{\partial^2 G_2}{\partial\efield_{k}\partial\temperature}.
+\end{align}
+
+
 
 }
 \bibliographystyle{plain}
