@@ -12,7 +12,7 @@
 \maketitle
 
 \abstract{
-This package helps dealing with the notation for linear elastic/piezoelectric materials by defining commands for fields and coefficients as well as support for easy switching between different notations. There is also support for handling the superscripts denoting the conditions for the coeffients. 
+This package helps dealing with the notation for linear elastic/piezoelectric materials by defining commands for fields and coefficients as well as support for easy switching between different notations. There is also support for handling the superscripts denoting the conditions for the coefficients. 
 }
 
 \section{Notation}
@@ -23,7 +23,7 @@ Some notations are predefined: One mostly congruent with the definitions in the 
 Any number of notational options can be given to the package. The last one in the options list is the one chosen. If none is given, the package defaults to the IEEE-like notation. This defines the notation globally in the document.
 The predefined notations are given in table \ref{tab:notations} which shows the physical quantity, its corresponding symbol in each predefined notation and the command to generate it.
 
-The definitons can be changed within the local scope (group). For example, in a document where the globally defined notation is the IEEE-like notation, the code
+The definitions can be changed within the local scope (group). For example, in a document where the globally defined notation is the IEEE-like notation, the code
 \begin{verbatim}
 \[
   {\NyeNotation\stress_{ik} = \stiffness_{ijkl}\strain_{kl}}
@@ -163,7 +163,7 @@ It is customary to denote the conditions under which a linear coefficient is mea
 
 The automated notation hinges on declaration of at most one field variable from
 each of the domains mechanical, electrical and thermal as free variables.
-The package then includes the relevant variables among those that are declared as independent in the supercscripts.
+The package then includes the relevant variables among those that are declared as independent in the superscripts.
 
 The command  \verb|\freestress| declares stress as a free variable in
 the mechanical domain. Since the conjugate variable strain then must be dependent,
@@ -408,7 +408,7 @@ Impermittivities and permittivities are
     {\freestrain\freetemperature\permittivity_{kl}}
   & = -\frac{\partial^2 G_2}{\partial\efield_{k}\partial\efield_{l}}.
 \end{align}
-We note that without specifiying conditions, the specifc heat capacity ${\nofree\heatcapacity}$ is given by
+We note that without specifying conditions, the specific heat capacity ${\nofree\heatcapacity}$ is given by
 \begin{equation}
   {\nofree
   \frac{\massdensity\heatcapacity}{\temperature}
@@ -461,7 +461,7 @@ The piezoelectric coupling constants are
   & = -\frac{\partial G}{\partial\efield_{k}\partial\stress{ij}}.
 \end{align}
 
-The pyroelectric cofficients are
+The pyroelectric coefficients are
 \begin{align}
   {\freestress\pyroelec_{k}}
   & =  -\frac{\partial^2 G}{\partial\efield_{k}\partial\temperature},
