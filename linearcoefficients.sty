@@ -187,6 +187,19 @@
   \@entropydensityfreefalse
 }
 \newcommand{\nofree}{\nomechanical\noelectrical\nothermal}
+\newcommand{\hform}{\freestrain\freedfield\nothermal}
+\newcommand{\gform}{\freestress\freedfield\nothermal}
+\newcommand{\eform}{\freestrain\freeefield\nothermal}
+\newcommand{\dform}{\freestress\freeefield\nothermal}
+\newcommand{\Uform}{\freestrain\freedfield\freeentropydensity}
+\newcommand{\Hform}{\freestress\freeefield\freeentropydensity}
+\newcommand{\HMform}{\freestress\freedfield\freeentropydensity}
+\newcommand{\HEform}{\freestrain\freeefield\freeentropydensity}
+\newcommand{\Aform}{\freestrain\freedfield\freetemperature}
+\newcommand{\Gform}{\freestress\freeefield\freetemperature}
+\newcommand{\GMform}{\freestress\freedfield\freetemperature}
+\newcommand{\GEform}{\freestrain\freeefield\freetemperature}
+
 
 % full commands
 \def\@mechvar{\if@stressfree\stress\fi\if@strainfree\strain\fi}

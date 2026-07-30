@@ -174,7 +174,30 @@ mechanical domain. In the electrical domain the similar commands are
 \verb|\freetemperature| and \verb|\freeentropydensity| for respectively temperature and entropy density.
 
 The commands \verb|\nomechanical|, \verb|\noelectrical| and \verb|\nothermal| clear all declarations of free variables in the domain indicated by the name of the command. The command \verb|\nofree| clears all declarations of
-free variables.
+free variables. Common combinations of free variables have macros as given in table \ref{tab:formcommands}.
+\begin{table}
+  \caption{Macros for common combinations of free variables and their equivalents in terms of simpler commands}
+  \label{tab:formcommands}
+  \centering
+  \begin{tabular}{ll}
+    \hline\hline
+    \rule{0pt}{2.5ex}Macro  & Equivalent  \\
+    \hline
+    \verb|\hform| & \verb|\freestrain\freedfield\nothermal| \\          
+    \verb|\gform| & \verb|\freestress\freedfield\nothermal| \\          
+    \verb|\eform| & \verb|\freestrain\freeefield\nothermal| \\          
+    \verb|\dform| & \verb|\freestress\freeefield\nothermal| \\          
+    \verb|\Uform| & \verb|\freestrain\freedfield\freeentropydensity| \\ 
+    \verb|\Hform| & \verb|\freestress\freeefield\freeentropydensity| \\ 
+    \verb|\HMform| & \verb|\freestress\freedfield\freeentropydensity| \\
+    \verb|\HEform| & \verb|\freestrain\freeefield\freeentropydensity| \\
+    \verb|\Aform| & \verb|\freestrain\freedfield\freetemperature| \\    
+    \verb|\Gform| & \verb|\freestress\freeefield\freetemperature| \\    
+    \verb|\GMform| & \verb|\freestress\freedfield\freetemperature| \\   
+    \verb|\GEform| & \verb|\freestrain\freeefield\freetemperature| \\   
+    \hline
+  \end{tabular}
+\end{table}
 
 \begin{table}
   \caption{Examples of IEEE-like notation for coefficients depending on which fields are declared free.}
