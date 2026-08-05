@@ -205,7 +205,7 @@
 %%% underline %%%
 % adapted from https://tex.stackexchange.com/questions/649142/double-underline-notation-for-matrices-and-single-underline-notation-for-vectors
 % double underline support
-\newcommand{\dblunderline}[1]{\@@underline{\dbl@underline{#1}}}
+\newcommand{\@dblunderline}[1]{\@@underline{\dbl@underline{#1}}}
 \newcommand{\dbl@underline}[1]{\mathpalette\dbl@@underline{#1}}
 \newcommand{\dbl@@underline}[2]{%
   \begingroup
@@ -229,18 +229,18 @@
   %\underline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
   \underline{\mspace{-0.5mu}#1\mspace{-0.5mu}}%
   \mspace{0.5mu}%
-  \mathcorr{#1}%
+  \@mathcorr{#1}%
 }}
 %\newcommand{\colmatp}[1]{{\colmat{#1}'}}
 \newcommand{\@mat}[1]{{%
   \mspace{0.5mu}%
-  %\dblunderline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
-  \dblunderline{\mspace{-0.5mu}#1\mspace{-0.5mu}}%
+  %\@dblunderline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
+  \@dblunderline{\mspace{-0.5mu}#1\mspace{-0.5mu}}%
   \mspace{0.5mu}%
-  \mathcorr{#1}%
+  \@mathcorr{#1}%
 }}
 %
-\newcommand{\mathcorr}[1]{\mathpalette\math@corr{#1}}
+\newcommand{\@mathcorr}[1]{\mathpalette\math@corr{#1}}
 \newcommand{\math@corr}[2]{%
   \begingroup
   \sbox\z@{$\m@th#1#2$}\sbox2{$\m@th#1#2_{}\kern-\scriptspace$}%
