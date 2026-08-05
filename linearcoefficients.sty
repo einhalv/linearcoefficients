@@ -224,21 +224,22 @@
   \scriptscriptfont\fi\fi\fi 3
 }
 % the commands
-\newcommand{\@colmat}[1]{{%
+\newcommand{\colmat}[1]{{%
   \mspace{0.5mu}%
   %\underline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
   \underline{\mspace{-0.5mu}#1\mspace{-0.5mu}}%
   \mspace{0.5mu}%
   \@mathcorr{#1}%
 }}
-%\newcommand{\colmatp}[1]{{\colmat{#1}'}}
-\newcommand{\@mat}[1]{{%
+\newcommand{\mat}[1]{{%
   \mspace{0.5mu}%
-  %\@dblunderline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
+  %\dblunderline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
   \@dblunderline{\mspace{-0.5mu}#1\mspace{-0.5mu}}%
   \mspace{0.5mu}%
   \@mathcorr{#1}%
 }}
+\newcommand{\matp}[1]{{\mat{#1}'}}
+\newcommand{\colmatp}[1]{{\colmat{#1}'}}
 %
 \newcommand{\@mathcorr}[1]{\mathpalette\math@corr{#1}}
 \newcommand{\math@corr}[2]{%
@@ -280,8 +281,8 @@
   \fi 
 }
 \newcommand{\umat}[1]{\@ultrue#1\@ulfalse}
-\newcommand{\@usymbol}[1]{\if@ul\@colmat{#1}\else#1\fi}
-\newcommand{\@uusymbol}[1]{\if@ul\@mat{{#1}}\else{#1}\fi}
+\newcommand{\@usymbol}[1]{\if@ul\colmat{#1}\else#1\fi}
+\newcommand{\@uusymbol}[1]{\if@ul\mat{{#1}}\else{#1}\fi}
 
 \newcommand{\polarization}{\@usymbol{\polarizationsymbol}}
 \newcommand{\efield}{\@usymbol{\efieldsymbol}}
