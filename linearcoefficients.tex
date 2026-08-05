@@ -253,10 +253,35 @@ for a set of linear constitutive equations. It renders as
 \end{align*}
 }
 
+\section{Matrix notation}
+There is support for matrix notation where rectangular matrices are indicated
+by double underscores and column matrices are indicated by single underscores.
+The commad \verb|\umat| generates underlines on the coefficient or field quantity this way. Examples in Ikeda's notation are
+{\IkedaNotation
+\begin{align}
+  \umat\polarization,\quad & & \umat\efield,\quad & \umat\dfield,\quad
+  &  \umat\stress,\quad & \umat\strain,\quad
+  & \umat\temperature,\quad &  \umat\entropydensity,\\
+  {\nofree\umat\stiffness},\quad & {\GEform\umat\stiffness},\quad
+  & {\nofree\umat\compliance},\quad & {\Gform\umat\compliance},\quad
+  & {\nofree\umat\permittivity},\quad & {\GEform\umat\permittivity},\quad  
+  & {\nofree\umat\impermittivity},\quad & {\GEform\umat\impermittivity},\\
+  {\nofree\umat\piezoh},\quad & {\GEform\umat\piezoh},\quad
+  & {\nofree\umat\piezog},\quad & {\GEform\umat\piezog},\quad
+  & {\nofree\umat\piezoe},\quad & {\GEform\umat\piezoe},\quad
+  & {\nofree\umat\piezod},\quad & {\GEform\umat\piezod}, \\
+  {\nofree\umat\heatcapacity},\quad & {\GEform\umat\heatcapacity},\quad
+  & {\nofree\umat\pyroelec},\quad & {\GEform\umat\pyroelec},\quad
+  & {\nofree\umat\heatofpolarization},\quad & {\GEform\umat\heatofpolarization},\quad
+  & {\nofree\umat\thermalexpansion},\quad & {\GEform\umat\thermalexpansion},\quad
+  & {\nofree\umat\heatofdeformation},\quad & {\GEform\umat\heatofdeformation}.\quad
+\end{align}
+}
+
 \section{Defining own notation}
 The user can define own notation by redefining the underlying symbols.
 For example, if we want capital $C$ instead of lower case $c$ for stiffness defined in the standard notations,
-we can write \verb|\renewcommand{\stiffnesssymbol}{C}|. This is how the standard notions are defined. As an example, the definition of \verb|\IkedaNotation| is
+we can write \verb|\renewcommand{\stiffnesssymbol}{C}|. This is how the standard notations are defined. As an example, the definition of \verb|\IkedaNotation| is
 \begin{verbatim}
 \newcommand{\IkedaNotation}{% (Ikeda's notation)
 \renewcommand{\polarizationsymbol}{P}

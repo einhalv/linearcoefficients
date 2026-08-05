@@ -18,6 +18,7 @@
 % utilities
 \def\@ifempty#1{\edef\temp{#1}\ifx\temp\empty}
 
+
   % symbols
 \newcommand{\polarizationsymbol}{}
 \newcommand{\efieldsymbol}{}
@@ -201,7 +202,55 @@
 \newcommand{\GEform}{\freestrain\freeefield\freetemperature}
 
 
+%%% underline %%%
+% adapted from https://tex.stackexchange.com/questions/649142/double-underline-notation-for-matrices-and-single-underline-notation-for-vectors
+% double underline support
+\newcommand{\dblunderline}[1]{\@@underline{\dbl@underline{#1}}}
+\newcommand{\dbl@underline}[1]{\mathpalette\dbl@@underline{#1}}
+\newcommand{\dbl@@underline}[2]{%
+  \begingroup
+  \sbox\z@{$\m@th#1\@@underline{#2}$}%
+  \dp\z@=\dimexpr\dp\z@-2\dbl@adjust{#1}\relax
+  \box\z@
+  \ifx#1\scriptstyle\kern-\scriptspace\else
+  \ifx#1\scriptscriptstyle\kern-\scriptspace\fi\fi
+  \endgroup
+}
+\newcommand{\dbl@adjust}[1]{%
+  \fontdimen8
+  \ifx#1\displaystyle\textfont\else
+  \ifx#1\textstyle\textfont\else
+  \ifx#1\scriptstyle\scriptfont\else
+  \scriptscriptfont\fi\fi\fi 3
+}
+% the commands
+\newcommand{\@colmat}[1]{{%
+  \mspace{0.5mu}%
+  %\underline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
+  \underline{\mspace{-0.5mu}#1\mspace{-0.5mu}}%
+  \mspace{0.5mu}%
+  \mathcorr{#1}%
+}}
+%\newcommand{\colmatp}[1]{{\colmat{#1}'}}
+\newcommand{\@mat}[1]{{%
+  \mspace{0.5mu}%
+  %\dblunderline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
+  \dblunderline{\mspace{-0.5mu}#1\mspace{-0.5mu}}%
+  \mspace{0.5mu}%
+  \mathcorr{#1}%
+}}
+%
+\newcommand{\mathcorr}[1]{\mathpalette\math@corr{#1}}
+\newcommand{\math@corr}[2]{%
+  \begingroup
+  \sbox\z@{$\m@th#1#2$}\sbox2{$\m@th#1#2_{}\kern-\scriptspace$}%
+  \kern\dimexpr\wd\z@-\wd\tw@\relax
+  \endgroup
+}
+%%% end -- underline %%%
+
 % full commands
+\newif\if@ul
 \def\@mechvar{\if@stressfree\stress\fi\if@strainfree\strain\fi}
 \def\@elvar{\if@efieldfree\efield\fi\if@dfieldfree\dfield\fi}
 \def\@thermvar{\if@temperaturefree\temperature\fi\if@entropydensityfree\entropydensity\fi}
@@ -216,55 +265,53 @@
   \fi
   \ifcase\@argc\relax
     #1\or
-    #1^{#2#3}\or
-    #1^{#2,#3}
+    #1^{\@ulfalse#2#3}\or
+    #1^{\@ulfalse#2,#3}
   \fi 
 }
-\newcommand{\polarization}{\polarizationsymbol}
-\newcommand{\efield}{\efieldsymbol}
-\newcommand{\dfield}{\dfieldsymbol}
-\newcommand{\stress}{\stresssymbol}
-\newcommand{\strain}{\strainsymbol}
-\newcommand{\temperature}{\temperaturesymbol}
-\newcommand{\entropydensity}{\entropydensitysymbol}
-\newcommand{\stiffness}{%
-\@doublesuper{\stiffnesssymbol}{\@elvar}{\@thermvar}  
+\def\@singlesuper#1#2{%
+  \@argc 1\relax
+  \@ifempty{#2}
+    \advance\@argc -1\relax
+  \fi
+  \ifcase\@argc\relax
+    #1\or
+    #1^{\@ulfalse#2}
+  \fi 
 }
+\newcommand{\umat}[1]{\@ultrue#1\@ulfalse}
+\newcommand{\@usymbol}[1]{\if@ul\@colmat{#1}\else#1\fi}
+\newcommand{\@uusymbol}[1]{\if@ul\@mat{{#1}}\else{#1}\fi}
+
+\newcommand{\polarization}{\@usymbol{\polarizationsymbol}}
+\newcommand{\efield}{\@usymbol{\efieldsymbol}}
+\newcommand{\dfield}{\@usymbol{\dfieldsymbol}}
+\newcommand{\stress}{\@usymbol{\stresssymbol}}
+\newcommand{\strain}{\@usymbol{\strainsymbol}}
+\newcommand{\temperature}{\@usymbol{\temperaturesymbol}}
+\newcommand{\entropydensity}{\@usymbol{\entropydensitysymbol}}
+\newcommand{\stiffness}{%
+  \@doublesuper{\@uusymbol{\stiffnesssymbol}}{\@elvar}{\@thermvar}}
 \newcommand{\compliance}{%
-  \@doublesuper{\compliancesymbol}{\@elvar}{\@thermvar}}
+  \@doublesuper{\@uusymbol{\compliancesymbol}}{\@elvar}{\@thermvar}}
 \newcommand{\permittivity}{%
-  \@doublesuper{\permittivitysymbol}{\@mechvar}{\@thermvar}}
+  \@doublesuper{\@uusymbol{\permittivitysymbol}}{\@mechvar}{\@thermvar}}
 \newcommand{\impermittivity}{%
-  \@doublesuper{\impermittivitysymbol}{\@mechvar}{\@thermvar}}
-\newcommand{\piezoh}{%
-  \def\first{\@thermvar}%
-  \@ifempty{\first}\piezohsymbol\else\piezohsymbol^{\first}\fi}
-\newcommand{\piezog}{%
-  \def\first{\@thermvar}%
-  \@ifempty{\first}\piezogsymbol\else\piezogsymbol^{\first}\fi}
-\newcommand{\piezoe}{%
-  \def\first{\@thermvar}%
-  \@ifempty{\first}\piezoesymbol\else\piezoesymbol^{\first}\fi}
-\newcommand{\piezod}{%
-  \def\first{\@thermvar}%
-  \@ifempty{\first}\piezodsymbol\else\piezodsymbol^{\first}\fi}
+  \@doublesuper{\@uusymbol{\impermittivitysymbol}}{\@mechvar}{\@thermvar}}
+\newcommand{\piezoh}{\@singlesuper{\@uusymbol{\piezohsymbol}}{\@thermvar}}
+\newcommand{\piezog}{\@singlesuper{\@uusymbol{\piezogsymbol}}{\@thermvar}}
+\newcommand{\piezoe}{\@singlesuper{\@uusymbol{\piezoesymbol}}{\@thermvar}}
+\newcommand{\piezod}{\@singlesuper{\@uusymbol{\piezodsymbol}}{\@thermvar}}
 \newcommand{\heatcapacity}{%
-  \def\first{\@mechvar}%
-  \def\second{\@elvar}%
-  \def\alt{\@ifempty{\second}\relax\else,\second\fi}
-  \heatcapacitysymbol^{\first\@ifempty{\first}\second\else\alt\fi}}
+  \@doublesuper{\heatcapacitysymbol}{\@mechvar}{\@elvar}}
 \newcommand{\pyroelec}{%
-  \def\first{\@mechvar}%
-  \@ifempty{\first}\pyroelecsymbol\else\pyroelecsymbol^{\first}\fi}
+  \@singlesuper{\@usymbol{\pyroelecsymbol}}{\@mechvar}}
 \newcommand{\heatofpolarization}{%
-  \def\first{\@mechvar}%
-  \@ifempty{\first}\heatofpolarizationsymbol\else\heatofpolarizationsymbol^{\first}\fi}
+  \@singlesuper{\@usymbol{\heatofpolarizationsymbol}}{\@mechvar}}
 \newcommand{\thermalexpansion}{%
-  \def\first{\@elvar}%
-  \@ifempty{\first}\thermalexpansionsymbol\else\thermalexpansionsymbol^{\first}\fi}
+  \@singlesuper{\@uusymbol{\thermalexpansionsymbol}}{\@elvar}}
 \newcommand{\heatofdeformation}{%
-  \def\first{\@elvar}%
-  \@ifempty{\first}\heatofdeformationsymbol\else\heatofdeformationsymbol^{\first}\fi}
+  \@singlesuper{\@uusymbol{\heatofdeformationsymbol}}{\@elvar}}
 \newcommand{\massdensity}{\massdensitysymbol}
 
 \endinput
