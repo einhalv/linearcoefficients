@@ -254,11 +254,11 @@ for a set of linear constitutive equations. It renders as
 }
 
 \section{Matrix notation}
-There is support for matrix notation where rectangular matrices are indicated
-by double underscores and column matrices are indicated by single underscores
-provided respectively by the commands \verb|\mat| and \verb|\colmat|. There are also varieties of these called \verb|\matp| and \verb|\colmatp| that put a prime on the symbol in questions. For example
+There is support for matrix notation for the tensors. Three different notations are defined: i) The macro \verb|\underlinemat| defines a notation where rectangular matrices are indicated by double underscores and column matrices are indicated by single underscores. ii) Brackets for rectangular matrices and braces for column matrices is set with the macro \verb|\bracketmat|. iii) Bold symbols for both rectangular and column matrices is by \verb|\boldfacemat|.
+
+ The notations for respectively rectangular and column matrices are produced by the macros \verb|\mat| and \verb|\colmat|. There are also varieties of these called \verb|\matp| and \verb|\colmatp| that put a prime on the symbol in questions. For example
 \begin{verbatim}
-\IkedaNotation\nofree
+\IkedaNotation\underlinemat\nofree
 \begin{align*}
   \colmat{\dfield} = \mat{\permittivity}\colmat{\efield},
   && \colmatp{\dfield} = \mat{a}\colmat{\dfield},
@@ -267,12 +267,30 @@ provided respectively by the commands \verb|\mat| and \verb|\colmat|. There are 
 \end{align*}
 \end{verbatim}
 generates
-{\IkedaNotation\nofree
+{\IkedaNotation\underlinemat\nofree
 \begin{align*}
   \colmat{\dfield} = \mat{\permittivity}\colmat{\efield},
   && \colmatp{\dfield} = \mat{a}\colmat{\dfield},
   && \colmatp{\efield} = \mat{a}\colmat{\efield},   
   && \matp{\permittivity} = \mat{a}^\mathrm{T}\mat{\permittivity}\mat{a}.    
+\end{align*}
+}
+Replacing, \verb|\underlinemat| by \verb|\bracketmat| produces instead
+{\IkedaNotation\bracketmat\nofree
+\begin{align*}
+  \colmat{\dfield} = \mat{\permittivity}\colmat{\efield},
+  && \colmatp{\dfield} = \mat{a}\colmat{\dfield},
+  && \colmatp{\efield} = \mat{a}\colmat{\efield},   
+  && \matp{\permittivity} = \mat{a}^\mathrm{T}\mat{\permittivity}\mat{a}    
+\end{align*}
+}
+while \verb|\boldfacemat| produces
+{\IkedaNotation\boldfacemat\nofree
+\begin{align*}
+  \colmat{\dfield} = \mat{\permittivity}\colmat{\efield},
+  && \colmatp{\dfield} = \mat{a}\colmat{\dfield},
+  && \colmatp{\efield} = \mat{a}\colmat{\efield},   
+  && \matp{\permittivity} = \mat{a}^\mathrm{T}\mat{\permittivity}\mat{a}.
 \end{align*}
 }
 

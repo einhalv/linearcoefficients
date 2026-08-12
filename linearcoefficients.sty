@@ -1,6 +1,7 @@
 % Copyright (C) 2026 Einar Halvorsen
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{linearcoefficients}[2026/05/24 v1.0.0 Package for controlling notation of linear ceofficients]
+\RequirePackage{amsbsy}
 
 \newif\if@ieee
 \newif\if@nye
@@ -16,8 +17,9 @@
 \ProcessOptions*\relax
 
 % utilities
-\def\@ifempty#1{\edef\temp{#1}\ifx\temp\empty}
-
+\def\@ifempty#1{%
+  \edef\temp{#1}
+  \ifx\temp\empty}
 
   % symbols
 \newcommand{\polarizationsymbol}{}
@@ -201,54 +203,51 @@
 \newcommand{\GMform}{\freestress\freedfield\freetemperature}
 \newcommand{\GEform}{\freestrain\freeefield\freetemperature}
 
+%%% matrix styles
+% underline
+\def\@shortul#1{\mkern1mu\underline{\mkern-1mu#1\mkern-1mu}\mkern1mu}
+\def\@colmatul#1{\@shortul{#1}}
+\def\@matul#1{\@shortul{\@shortul{#1}}}
+% brackets
+\def\@colmatbr#1{\{#1\}}
+\def\@matbr#1{[#1]}
+% boldface
+\def\@colmatbf#1{\pmb{#1}}
+\def\@matbf#1{\boldsymbol{#1}}
+% style-setting commands
+\def\@matpext#1{{\mat{#1}'}}
+\def\@matpint#1{{\mat{#1'}}}
+\def\@colmatpext#1{{\colmat{#1}'}}
+\def\@colmatpint#1{{\colmat{#1'}}}
+\def\underlinemat{%
+  \let\mat\@matul
+  \let\colmat\@colmatul
+  \let\matp\@matpext
+  \let\colmatp\@colmatpext
+}
+\def\bracketmat{%
+  \let\mat\@matbr
+  \let\colmat\@colmatbr
+  \let\matp\@matpint
+  \let\colmatp\@colmatpint
+}
+\def\boldfacemat{%
+  \let\mat\@matbf
+  \let\colmat\@colmatbf
+  \let\matp\@matpext
+  \let\colmatp\@colmatpext
+}
+\boldfacemat
 
-%%% underline %%%
-% adapted from https://tex.stackexchange.com/questions/649142/double-underline-notation-for-matrices-and-single-underline-notation-for-vectors
-% double underline support
-\newcommand{\@dblunderline}[1]{\@@underline{\dbl@underline{#1}}}
-\newcommand{\dbl@underline}[1]{\mathpalette\dbl@@underline{#1}}
-\newcommand{\dbl@@underline}[2]{%
-  \begingroup
-  \sbox\z@{$\m@th#1\@@underline{#2}$}%
-  \dp\z@=\dimexpr\dp\z@-2\dbl@adjust{#1}\relax
-  \box\z@
-  \ifx#1\scriptstyle\kern-\scriptspace\else
-  \ifx#1\scriptscriptstyle\kern-\scriptspace\fi\fi
-  \endgroup
-}
-\newcommand{\dbl@adjust}[1]{%
-  \fontdimen8
-  \ifx#1\displaystyle\textfont\else
-  \ifx#1\textstyle\textfont\else
-  \ifx#1\scriptstyle\scriptfont\else
-  \scriptscriptfont\fi\fi\fi 3
-}
-% the commands
-\newcommand{\colmat}[1]{{%
-  \mspace{0.5mu}%
-  %\underline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
-  \underline{\mspace{-0.5mu}#1\mspace{-0.5mu}}%
-  \mspace{0.5mu}%
-  \@mathcorr{#1}%
-}}
-\newcommand{\mat}[1]{{%
-  \mspace{0.5mu}%
-  %\dblunderline{\mspace{-0.5mu}#1_{}\kern-\scriptspace\mspace{-0.5mu}}%
-  \@dblunderline{\mspace{-0.5mu}#1\mspace{-0.5mu}}%
-  \mspace{0.5mu}%
-  \@mathcorr{#1}%
-}}
-\newcommand{\matp}[1]{{\mat{#1}'}}
-\newcommand{\colmatp}[1]{{\colmat{#1}'}}
-%
-\newcommand{\@mathcorr}[1]{\mathpalette\math@corr{#1}}
-\newcommand{\math@corr}[2]{%
-  \begingroup
-  \sbox\z@{$\m@th#1#2$}\sbox2{$\m@th#1#2_{}\kern-\scriptspace$}%
-  \kern\dimexpr\wd\z@-\wd\tw@\relax
-  \endgroup
-}
-%%% end -- underline %%%
+%\def\underscoretype{0}
+%\def\boldmatrixtype{1}
+%\def\brackettype{2}
+%\newcount\@matrixtype
+%\@matrixtype\underscoretype\relax
+
+
+%%% end -- matrix styles
+
 
 % full commands
 \newif\if@ul
@@ -289,8 +288,8 @@
 \newcommand{\dfield}{\@usymbol{\dfieldsymbol}}
 \newcommand{\stress}{\@usymbol{\stresssymbol}}
 \newcommand{\strain}{\@usymbol{\strainsymbol}}
-\newcommand{\temperature}{\@usymbol{\temperaturesymbol}}
-\newcommand{\entropydensity}{\@usymbol{\entropydensitysymbol}}
+\newcommand{\temperature}{\temperaturesymbol}
+\newcommand{\entropydensity}{\entropydensitysymbol}
 \newcommand{\stiffness}{%
   \@doublesuper{\@uusymbol{\stiffnesssymbol}}{\@elvar}{\@thermvar}}
 \newcommand{\compliance}{%
