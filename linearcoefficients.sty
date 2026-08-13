@@ -8,12 +8,20 @@
 \newif\if@ikeda
 \newif\if@mason
 
+\def\@underlinematrixtype{0}
+\def\@boldmatrixtype{1}
+\def\@bracketmatrixtype{2}
+\newcount\@matrixtype
+
 \DeclareOption{IEEE}{\@ieeetrue\@nyefalse\@ikedafalse\@masonfalse}
 \DeclareOption{Nye}{\@ieeefalse\@nyetrue\@ikedafalse\@masonfalse}
 \DeclareOption{Ikeda}{\@ieeefalse\@nyefalse\@ikedatrue\@masonfalse}
 \DeclareOption{Mason}{\@ieeefalse\@nyefalse\@ikedafalse\@masontrue}
+\DeclareOption{underlinematrices}{\@matrixtype\@underlinematrixtype\relax}
+\DeclareOption{boldmatrices}{\@matrixtype\@boldmatrixtype\relax}
+\DeclareOption{bracketmatrices}{\@matrixtype\@bracketmatrixtype\relax}
 \DeclareOption*{\PackageWarning{linearcoefficients}{Unknown ‘\CurrentOption’}}
-\ExecuteOptions{IEEE}
+\ExecuteOptions{IEEE,bracketmatrices}
 \ProcessOptions*\relax
 
 % utilities
@@ -224,26 +232,23 @@
   \let\colmat\@colmatul
   \let\matp\@matpext
   \let\colmatp\@colmatpext
+  \@matrixtype\@underlinematrixtype\relax
 }
 \def\bracketmat{%
   \let\mat\@matbr
   \let\colmat\@colmatbr
   \let\matp\@matpint
   \let\colmatp\@colmatpint
+  \@matrixtype\@bracketmatrixtype\relax
 }
 \def\boldfacemat{%
   \let\mat\@matbf
   \let\colmat\@colmatbf
   \let\matp\@matpext
   \let\colmatp\@colmatpext
+  \@matrixtype\@boldmatrixtype\relax
 }
-\boldfacemat
-
-%\def\underscoretype{0}
-%\def\boldmatrixtype{1}
-%\def\brackettype{2}
-%\newcount\@matrixtype
-%\@matrixtype\underscoretype\relax
+\ifcase\@matrixtype\relax\underlinemat\or\boldfacemat\or\bracketmat\fi 
 
 
 %%% end -- matrix styles

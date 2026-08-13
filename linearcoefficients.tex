@@ -294,7 +294,10 @@ while \verb|\boldfacemat| produces
 \end{align*}
 }
 
-The commad \verb|\umat| automatically generates correct underlines on the coefficient or field quantity but avoids underlining superscripts. Examples in Ikeda's notation are
+Either of the three matrix notations above can be specified by the respective package options \verb|underlinematrices|, \verb|bracketmatrices| or \verb|boldmatrices|. If more than one of these options are given, the last one is used. If no option is given, the package defaults to \verb|bracketmatrices|. 
+
+
+The command \verb|\umat| automatically generates correct underlines on the coefficient or field quantity but avoids underlining superscripts. Examples in Ikeda's notation are
 {\IkedaNotation
 \begin{align}
   \umat\polarization,\quad && && \umat\efield,\quad && \umat\dfield,\quad
