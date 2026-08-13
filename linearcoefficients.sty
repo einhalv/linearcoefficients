@@ -274,16 +274,7 @@
     #1^{\@ulfalse#2,#3}
   \fi 
 }
-\def\@singlesuper#1#2{%
-  \@argc 1\relax
-  \@ifempty{#2}
-    \advance\@argc -1\relax
-  \fi
-  \ifcase\@argc\relax
-    #1\or
-    #1^{\@ulfalse#2}
-  \fi 
-}
+
 \newcommand{\amat}[1]{\@ultrue#1\@ulfalse}
 \newcommand{\@usymbol}[1]{\if@ul\colmat{#1}\else#1\fi}
 \newcommand{\@uusymbol}[1]{\if@ul\mat{{#1}}\else{#1}\fi}
@@ -303,20 +294,20 @@
   \@doublesuper{\@uusymbol{\permittivitysymbol}}{\@mechvar}{\@thermvar}}
 \newcommand{\impermittivity}{%
   \@doublesuper{\@uusymbol{\impermittivitysymbol}}{\@mechvar}{\@thermvar}}
-\newcommand{\piezoh}{\@singlesuper{\@uusymbol{\piezohsymbol}}{\@thermvar}}
-\newcommand{\piezog}{\@singlesuper{\@uusymbol{\piezogsymbol}}{\@thermvar}}
-\newcommand{\piezoe}{\@singlesuper{\@uusymbol{\piezoesymbol}}{\@thermvar}}
-\newcommand{\piezod}{\@singlesuper{\@uusymbol{\piezodsymbol}}{\@thermvar}}
+\newcommand{\piezoh}{\@doublesuper{\@uusymbol{\piezohsymbol}}{\@thermvar}{}}
+\newcommand{\piezog}{\@doublesuper{\@uusymbol{\piezogsymbol}}{\@thermvar}{}}
+\newcommand{\piezoe}{\@doublesuper{\@uusymbol{\piezoesymbol}}{\@thermvar}{}}
+\newcommand{\piezod}{\@doublesuper{\@uusymbol{\piezodsymbol}}{\@thermvar}{}}
 \newcommand{\heatcapacity}{%
   \@doublesuper{\heatcapacitysymbol}{\@mechvar}{\@elvar}}
 \newcommand{\pyroelec}{%
-  \@singlesuper{\@usymbol{\pyroelecsymbol}}{\@mechvar}}
+  \@doublesuper{\@usymbol{\pyroelecsymbol}}{\@mechvar}{}}
 \newcommand{\heatofpolarization}{%
-  \@singlesuper{\@usymbol{\heatofpolarizationsymbol}}{\@mechvar}}
+  \@doublesuper{\@usymbol{\heatofpolarizationsymbol}}{\@mechvar}{}}
 \newcommand{\thermalexpansion}{%
-  \@singlesuper{\@uusymbol{\thermalexpansionsymbol}}{\@elvar}}
+  \@doublesuper{\@uusymbol{\thermalexpansionsymbol}}{\@elvar}{}}
 \newcommand{\heatofdeformation}{%
-  \@singlesuper{\@uusymbol{\heatofdeformationsymbol}}{\@elvar}}
+  \@doublesuper{\@uusymbol{\heatofdeformationsymbol}}{\@elvar}{}}
 \newcommand{\massdensity}{\massdensitysymbol}
 
 \endinput
