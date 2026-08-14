@@ -1,6 +1,6 @@
 % Copyright (C) 2026 Einar Halvorsen
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{linearcoefficients}[2026/05/24 v1.0.0 Package for controlling notation of linear ceofficients]
+\ProvidesPackage{linearcoefficients}[2026/05/24 v1.0.0 Package for controlling notation of linear coefficients]
 \RequirePackage{amsbsy}
 
 \newif\if@ieee
@@ -211,18 +211,18 @@
 \newcommand{\GMform}{\freestress\freedfield\freetemperature}
 \newcommand{\GEform}{\freestrain\freeefield\freetemperature}
 
-%%% matrix styless 
+%%% matrix styles 
 % underline
 \def\@shortul#1{\mkern1mu\underline{\mkern-1mu#1\mkern-1mu}\mkern1mu}
 \def\@colmatul#1{\@shortul{#1}}
 \def\@matul#1{\@shortul{\@shortul{#1}}}
 % brackets
-\def\@colmatbr#1{\{#1\}}
-\def\@matbr#1{[#1]}
+\def\@colmatbr#1{\left\{#1\right\}}
+\def\@matbr#1{\left[#1\right]}
 % boldface
 \def\@colmatbf#1{\pmb{#1}}
 \def\@matbf#1{\pmb{#1}}
-% typsetting commands
+% typesetting commands
 \newif\if@ul
 \def\@mechvar{\if@stressfree\stress\fi\if@strainfree\strain\fi}
 \def\@elvar{\if@efieldfree\efield\fi\if@dfieldfree\dfield\fi}
@@ -251,9 +251,9 @@
     \advance\@argc -1\relax
   \fi
   \if@ul
-    \edef\temp{\mat{#1}}
+    \def\temp{\mat{#1}}
   \else
-    \edef\temp{#1}
+    \def\temp{#1}
   \fi
   \ifcase\@argc\relax
     \temp\or
@@ -293,9 +293,9 @@
     \advance\@argc -1\relax
   \fi
   \if@ul
-    \edef\temp{\colmat{#1}}
+    \def\temp{\colmat{#1}}
   \else
-    \edef\temp{#1}
+    \def\temp{#1}
   \fi
   \ifcase\@argc\relax
     \temp\or
