@@ -29,7 +29,7 @@
   \edef\temp{#1}
   \ifx\temp\empty}
 
-  % symbols
+% symbols
 \newcommand{\polarizationsymbol}{}
 \newcommand{\efieldsymbol}{}
 \newcommand{\dfieldsymbol}{}
@@ -211,7 +211,7 @@
 \newcommand{\GMform}{\freestress\freedfield\freetemperature}
 \newcommand{\GEform}{\freestrain\freeefield\freetemperature}
 
-%%% matrix styles
+%%% matrix styless 
 % underline
 \def\@shortul#1{\mkern1mu\underline{\mkern-1mu#1\mkern-1mu}\mkern1mu}
 \def\@colmatul#1{\@shortul{#1}}
@@ -221,40 +221,8 @@
 \def\@matbr#1{[#1]}
 % boldface
 \def\@colmatbf#1{\pmb{#1}}
-\def\@matbf#1{\boldsymbol{#1}}
-% style-setting commands
-\def\@matpext#1{{\mat{#1}'}}
-\def\@matpint#1{{\mat{#1'}}}
-\def\@colmatpext#1{{\colmat{#1}'}}
-\def\@colmatpint#1{{\colmat{#1'}}}
-\def\underlinemat{%
-  \let\mat\@matul
-  \let\colmat\@colmatul
-  \let\matp\@matpext
-  \let\colmatp\@colmatpext
-  \@matrixtype\@underlinematrixtype\relax
-}
-\def\bracketmat{%
-  \let\mat\@matbr
-  \let\colmat\@colmatbr
-  \let\matp\@matpint
-  \let\colmatp\@colmatpint
-  \@matrixtype\@bracketmatrixtype\relax
-}
-\def\boldfacemat{%
-  \let\mat\@matbf
-  \let\colmat\@colmatbf
-  \let\matp\@matpext
-  \let\colmatp\@colmatpext
-  \@matrixtype\@boldmatrixtype\relax
-}
-\ifcase\@matrixtype\relax\underlinemat\or\boldfacemat\or\bracketmat\fi 
-
-
-%%% end -- matrix styles
-
-
-% full commands
+\def\@matbf#1{\pmb{#1}}
+% typsetting commands
 \newif\if@ul
 \def\@mechvar{\if@stressfree\stress\fi\if@strainfree\strain\fi}
 \def\@elvar{\if@efieldfree\efield\fi\if@dfieldfree\dfield\fi}
@@ -274,6 +242,125 @@
     #1^{\@ulfalse#2,#3}
   \fi 
 }
+\def\@matsuperext#1#2#3{%
+  \@argc 2\relax
+  \@ifempty{#2}
+    \advance\@argc -1\relax
+  \fi
+  \@ifempty{#3}
+    \advance\@argc -1\relax
+  \fi
+  \if@ul
+    \edef\temp{\mat{#1}}
+  \else
+    \edef\temp{#1}
+  \fi
+  \ifcase\@argc\relax
+    \temp\or
+    {\temp}^{\@ulfalse#2#3}\or
+    {\temp}^{\@ulfalse#2,#3}\relax
+  \fi 
+}
+\def\@matsuperint#1#2#3{%
+  \@argc 2\relax
+  \@ifempty{#2}
+    \advance\@argc -1\relax
+  \fi
+  \@ifempty{#3}
+    \advance\@argc -1\relax
+  \fi
+  \if@ul
+    \ifcase\@argc\relax
+      \mat{#1}\or
+      \mat{#1^{\@ulfalse#2#3}}\or
+      \mat{#1^{\@ulfalse#2,#3}}
+    \fi 
+  \else
+      \ifcase\@argc\relax
+        #1\or
+        #1^{\@ulfalse#2#3}\or
+        #1^{\@ulfalse#2,#3}
+      \fi 
+  \fi
+}
+%%
+\def\@colsuperext#1#2#3{%
+  \@argc 2\relax
+  \@ifempty{#2}
+    \advance\@argc -1\relax
+  \fi
+  \@ifempty{#3}
+    \advance\@argc -1\relax
+  \fi
+  \if@ul
+    \edef\temp{\colmat{#1}}
+  \else
+    \edef\temp{#1}
+  \fi
+  \ifcase\@argc\relax
+    \temp\or
+    {\temp}^{\@ulfalse#2#3}\or
+    {\temp}^{\@ulfalse#2,#3}\relax
+  \fi 
+}
+\def\@colsuperint#1#2#3{%
+  \@argc 2\relax
+  \@ifempty{#2}
+    \advance\@argc -1\relax
+  \fi
+  \@ifempty{#3}
+    \advance\@argc -1\relax
+  \fi
+  \if@ul
+    \ifcase\@argc\relax
+      \colmat{#1}\or
+      \colmat{#1^{\@ulfalse#2#3}}\or
+      \colmat{#1^{\@ulfalse#2,#3}}
+    \fi 
+  \else
+      \ifcase\@argc\relax
+        #1\or
+        #1^{\@ulfalse#2#3}\or
+        #1^{\@ulfalse#2,#3}
+      \fi 
+  \fi
+}
+\def\@matpext#1{{\mat{#1}'}}
+\def\@matpint#1{{\mat{#1'}}}
+\def\@colmatpext#1{{\colmat{#1}'}}
+\def\@colmatpint#1{{\colmat{#1'}}}
+%%% end - matrix styles
+
+%%% matrix style-setting commands
+\def\underlinemat{%
+  \let\mat\@matul
+  \let\colmat\@colmatul
+  \let\matp\@matpext
+  \let\colmatp\@colmatpext
+  \@matrixtype\@underlinematrixtype\relax
+  \let\@matsuper\@matsuperext
+  \let\@colsuper\@colsuperext
+}
+\def\bracketmat{%
+  \let\mat\@matbr
+  \let\colmat\@colmatbr
+  \let\matp\@matpint
+  \let\colmatp\@colmatpint
+  \@matrixtype\@bracketmatrixtype\relax
+  \let\@matsuper\@matsuperint
+  \let\@colsuper\@colsuperint
+}
+\def\boldfacemat{%
+  \let\mat\@matbf
+  \let\colmat\@colmatbf
+  \let\matp\@matpext
+  \let\colmatp\@colmatpext
+  \@matrixtype\@boldmatrixtype\relax
+  \let\@matsuper\@matsuperext
+  \let\@colsuper\@colsuperext
+}
+\ifcase\@matrixtype\relax\underlinemat\or\boldfacemat\or\bracketmat\fi 
+%%% end --- matrix style-setting commands
 
 \newcommand{\amat}[1]{\@ultrue#1\@ulfalse}
 \newcommand{\@usymbol}[1]{\if@ul\colmat{#1}\else#1\fi}
@@ -287,27 +374,27 @@
 \newcommand{\temperature}{\temperaturesymbol}
 \newcommand{\entropydensity}{\entropydensitysymbol}
 \newcommand{\stiffness}{%
-  \@doublesuper{\@uusymbol{\stiffnesssymbol}}{\@elvar}{\@thermvar}}
+  \@matsuper{\stiffnesssymbol}{\@elvar}{\@thermvar}}
 \newcommand{\compliance}{%
-  \@doublesuper{\@uusymbol{\compliancesymbol}}{\@elvar}{\@thermvar}}
+  \@matsuper{\compliancesymbol}{\@elvar}{\@thermvar}}
 \newcommand{\permittivity}{%
-  \@doublesuper{\@uusymbol{\permittivitysymbol}}{\@mechvar}{\@thermvar}}
+  \@matsuper{\permittivitysymbol}{\@mechvar}{\@thermvar}}
 \newcommand{\impermittivity}{%
-  \@doublesuper{\@uusymbol{\impermittivitysymbol}}{\@mechvar}{\@thermvar}}
-\newcommand{\piezoh}{\@doublesuper{\@uusymbol{\piezohsymbol}}{\@thermvar}{}}
-\newcommand{\piezog}{\@doublesuper{\@uusymbol{\piezogsymbol}}{\@thermvar}{}}
-\newcommand{\piezoe}{\@doublesuper{\@uusymbol{\piezoesymbol}}{\@thermvar}{}}
-\newcommand{\piezod}{\@doublesuper{\@uusymbol{\piezodsymbol}}{\@thermvar}{}}
+  \@matsuper{\impermittivitysymbol}{\@mechvar}{\@thermvar}}
+\newcommand{\piezoh}{\@matsuper{\piezohsymbol}{\@thermvar}{}}
+\newcommand{\piezog}{\@matsuper{\piezogsymbol}{\@thermvar}{}}
+\newcommand{\piezoe}{\@matsuper{\piezoesymbol}{\@thermvar}{}}
+\newcommand{\piezod}{\@matsuper{\piezodsymbol}{\@thermvar}{}}
 \newcommand{\heatcapacity}{%
   \@doublesuper{\heatcapacitysymbol}{\@mechvar}{\@elvar}}
 \newcommand{\pyroelec}{%
-  \@doublesuper{\@usymbol{\pyroelecsymbol}}{\@mechvar}{}}
+  \@colsuper{\pyroelecsymbol}{\@mechvar}{}}
 \newcommand{\heatofpolarization}{%
-  \@doublesuper{\@usymbol{\heatofpolarizationsymbol}}{\@mechvar}{}}
+  \@colsuper{\heatofpolarizationsymbol}{\@mechvar}{}}
 \newcommand{\thermalexpansion}{%
-  \@doublesuper{\@uusymbol{\thermalexpansionsymbol}}{\@elvar}{}}
+  \@matsuper{\thermalexpansionsymbol}{\@elvar}{}}
 \newcommand{\heatofdeformation}{%
-  \@doublesuper{\@uusymbol{\heatofdeformationsymbol}}{\@elvar}{}}
+  \@matsuper{\heatofdeformationsymbol}{\@elvar}{}}
 \newcommand{\massdensity}{\massdensitysymbol}
 
 \endinput
