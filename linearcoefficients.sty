@@ -26,8 +26,8 @@
 
 % utilities
 \def\@ifempty#1{%
-  \edef\temp{#1}
-  \ifx\temp\empty}
+  \edef\reserved@a{#1}
+  \ifx\reserved@a\empty}
 
 % symbols
 \newcommand{\polarizationsymbol}{}
@@ -228,7 +228,7 @@
 \def\@elvar{\if@efieldfree\efield\fi\if@dfieldfree\dfield\fi}
 \def\@thermvar{\if@temperaturefree\temperature\fi\if@entropydensityfree\entropydensity\fi}
 \newcount\@argc
-\def\@doublesuper#1#2#3{%
+\def\@doublesuper#1#2#3#4{%
   \@argc 2\relax
   \@ifempty{#2}
     \advance\@argc -1\relax
@@ -236,13 +236,18 @@
   \@ifempty{#3}
     \advance\@argc -1\relax
   \fi
+  \@ifempty{#4}
+    \def\temp{#1}
+  \else
+    \def\temp{#1^{#4}}
+  \fi
   \ifcase\@argc\relax
-    #1\or
-    #1^{\@ulfalse#2#3}\or
-    #1^{\@ulfalse#2,#3}
+    \temp\or
+    #1^{#4\@ulfalse#2#3}\or
+    #1^{#4\@ulfalse#2,#3}
   \fi 
 }
-\def\@matsuperext#1#2#3{%
+\def\@matsuperext#1#2#3#4{%
   \@argc 2\relax
   \@ifempty{#2}
     \advance\@argc -1\relax
@@ -255,13 +260,18 @@
   \else
     \def\temp{#1}
   \fi
+  \@ifempty{#4}
+     \def\@temp{\temp}
+  \else
+    \def\@temp{{\temp}^{#4}}
+  \fi
   \ifcase\@argc\relax
-    \temp\or
-    {\temp}^{\@ulfalse#2#3}\or
-    {\temp}^{\@ulfalse#2,#3}\relax
+    \@temp\or
+    {\temp}^{#4\@ulfalse#2#3}\or
+    {\temp}^{#4\@ulfalse#2,#3}\relax
   \fi 
 }
-\def\@matsuperint#1#2#3{%
+\def\@matsuperint#1#2#3#4{%
   \@argc 2\relax
   \@ifempty{#2}
     \advance\@argc -1\relax
@@ -269,22 +279,27 @@
   \@ifempty{#3}
     \advance\@argc -1\relax
   \fi
+  \@ifempty{#4}
+    \def\@temp{#1}
+  \else
+    \def\@temp{#1^{#4}}
+  \fi
   \if@ul
     \ifcase\@argc\relax
-      \mat{#1}\or
-      \mat{#1^{\@ulfalse#2#3}}\or
-      \mat{#1^{\@ulfalse#2,#3}}
+      \mat{\@temp}\or
+      \mat{#1^{#4\@ulfalse#2#3}}\or
+      \mat{#1^{#4\@ulfalse#2,#3}}
     \fi 
   \else
       \ifcase\@argc\relax
-        #1\or
-        #1^{\@ulfalse#2#3}\or
-        #1^{\@ulfalse#2,#3}
+        \@temp\or
+        #1^{#4\@ulfalse#2#3}\or
+        #1^{#4\@ulfalse#2,#3}
       \fi 
   \fi
 }
 %%
-\def\@colsuperext#1#2#3{%
+\def\@colsuperext#1#2#3#4{%
   \@argc 2\relax
   \@ifempty{#2}
     \advance\@argc -1\relax
@@ -297,13 +312,18 @@
   \else
     \def\temp{#1}
   \fi
+  \@ifempty{#4}
+    \def\@temp{\temp}
+  \else
+    \def\@temp{{\temp}^{#4}}
+  \fi
   \ifcase\@argc\relax
-    \temp\or
-    {\temp}^{\@ulfalse#2#3}\or
-    {\temp}^{\@ulfalse#2,#3}\relax
+    \@temp\or
+    {\temp}^{#4\@ulfalse#2#3}\or
+    {\temp}^{#4\@ulfalse#2,#3}\relax
   \fi 
 }
-\def\@colsuperint#1#2#3{%
+\def\@colsuperint#1#2#3#4{%
   \@argc 2\relax
   \@ifempty{#2}
     \advance\@argc -1\relax
@@ -311,17 +331,22 @@
   \@ifempty{#3}
     \advance\@argc -1\relax
   \fi
+  \@ifempty{#4}
+    \def\@temp{#1}
+  \else
+    \def\@temp{#1^{#4}}
+  \fi
   \if@ul
     \ifcase\@argc\relax
-      \colmat{#1}\or
-      \colmat{#1^{\@ulfalse#2#3}}\or
-      \colmat{#1^{\@ulfalse#2,#3}}
+      \colmat{\@temp}\or
+      \colmat{#1^{#4\@ulfalse#2#3}}\or
+      \colmat{#1^{#4\@ulfalse#2,#3}}
     \fi 
   \else
       \ifcase\@argc\relax
-        #1\or
-        #1^{\@ulfalse#2#3}\or
-        #1^{\@ulfalse#2,#3}
+        \@temp\or
+        #1^{#4\@ulfalse#2#3}\or
+        #1^{#4\@ulfalse#2,#3}
       \fi 
   \fi
 }
@@ -373,28 +398,28 @@
 \newcommand{\strain}{\@usymbol{\strainsymbol}}
 \newcommand{\temperature}{\temperaturesymbol}
 \newcommand{\entropydensity}{\entropydensitysymbol}
-\newcommand{\stiffness}{%
-  \@matsuper{\stiffnesssymbol}{\@elvar}{\@thermvar}}
-\newcommand{\compliance}{%
-  \@matsuper{\compliancesymbol}{\@elvar}{\@thermvar}}
-\newcommand{\permittivity}{%
-  \@matsuper{\permittivitysymbol}{\@mechvar}{\@thermvar}}
-\newcommand{\impermittivity}{%
-  \@matsuper{\impermittivitysymbol}{\@mechvar}{\@thermvar}}
-\newcommand{\piezoh}{\@matsuper{\piezohsymbol}{\@thermvar}{}}
-\newcommand{\piezog}{\@matsuper{\piezogsymbol}{\@thermvar}{}}
-\newcommand{\piezoe}{\@matsuper{\piezoesymbol}{\@thermvar}{}}
-\newcommand{\piezod}{\@matsuper{\piezodsymbol}{\@thermvar}{}}
-\newcommand{\heatcapacity}{%
-  \@doublesuper{\heatcapacitysymbol}{\@mechvar}{\@elvar}}
-\newcommand{\pyroelec}{%
-  \@colsuper{\pyroelecsymbol}{\@mechvar}{}}
-\newcommand{\heatofpolarization}{%
-  \@colsuper{\heatofpolarizationsymbol}{\@mechvar}{}}
-\newcommand{\thermalexpansion}{%
-  \@matsuper{\thermalexpansionsymbol}{\@elvar}{}}
-\newcommand{\heatofdeformation}{%
-  \@matsuper{\heatofdeformationsymbol}{\@elvar}{}}
+\newcommand{\stiffness}[1][]{%
+  \@matsuper{\stiffnesssymbol}{\@elvar}{\@thermvar}{#1}}
+\newcommand{\compliance}[1][]{%
+  \@matsuper{\compliancesymbol}{\@elvar}{\@thermvar}{#1}}
+\newcommand{\permittivity}[1][]{%
+  \@matsuper{\permittivitysymbol}{\@mechvar}{\@thermvar}{#1}}
+\newcommand{\impermittivity}[1][]{%
+  \@matsuper{\impermittivitysymbol}{\@mechvar}{\@thermvar}{#1}}
+\newcommand{\piezoh}[1][]{\@matsuper{\piezohsymbol}{\@thermvar}{}{#1}}
+\newcommand{\piezog}[1][]{\@matsuper{\piezogsymbol}{\@thermvar}{}{#1}}
+\newcommand{\piezoe}[1][]{\@matsuper{\piezoesymbol}{\@thermvar}{}{#1}}
+\newcommand{\piezod}[1][]{\@matsuper{\piezodsymbol}{\@thermvar}{}{#1}}
+\newcommand{\heatcapacity}[1][]{%
+  \@doublesuper{\heatcapacitysymbol}{\@mechvar}{\@elvar}{#1}}
+\newcommand{\pyroelec}[1][]{%
+  \@colsuper{\pyroelecsymbol}{\@mechvar}{}{#1}}
+\newcommand{\heatofpolarization}[1][]{%
+  \@colsuper{\heatofpolarizationsymbol}{\@mechvar}{}{#1}}
+\newcommand{\thermalexpansion}[1][]{%
+  \@colsuper{\thermalexpansionsymbol}{\@elvar}{}{#1}}
+\newcommand{\heatofdeformation}[1][]{%
+  \@matsuper{\heatofdeformationsymbol}{\@elvar}{}{#1}}
 \newcommand{\massdensity}{\massdensitysymbol}
 
 \endinput
